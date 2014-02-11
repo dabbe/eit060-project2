@@ -9,3 +9,14 @@ Computer Security EIT060
 >.databases
 >.quit
 
+
+= Client =
+
+
+= Server =
+- GUI/Terminal-applikation för att editera saker i databasen
+	* Danne kirrar metoderna på serversidan som anropas av dessa events (alt. också GUI till det)
+
+
+
+
