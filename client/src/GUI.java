@@ -25,7 +25,7 @@ public class GUI extends JFrame {
 
 		String[] data = { "Mister cool", "danne bogdan olsson pyssling",
 				"ptsuw", "iou789ah8" };
-		JList<String> list = new JList<String>(data);
+		JList list = new JList(data);
 		list.setPreferredSize(new Dimension(300, 300));
 
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);

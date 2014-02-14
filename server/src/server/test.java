@@ -1,3 +1,4 @@
+package server;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -22,6 +23,24 @@ public class test {
 		}
 
 		System.out.println("Opened database successfully");
+		
+		String query = "SELECT * from ?"; 
+		PreparedStatement prepStmt;
+		
+		try {
+			prepStmt = c.prepareStatement(query);
+			prepStmt.setString(1, "records");
+			
+			
+			ResultSet rs = prepStmt.executeQuery();
+			while(rs.next()){
+				rs.getInt(1);
+				rs.getString(2);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 
 		/*
 		 * ResultSet rs; try { DatabaseMetaData md = c.getMetaData(); rs =
@@ -31,7 +50,7 @@ public class test {
 		 * } catch (SQLException e) { e.printStackTrace(); }
 		 */
 
-		String query = "CREATE TABLE records (id int AUTO_INCREMENT, patient_name varchar(255), nurse_name varchar(255), doctor_name varchar(255), division varchar(255), data varchar(8000), PRIMARY KEY (id));";
+		/*String query = "CREATE TABLE records (id int AUTO_INCREMENT, patient_name varchar(255), nurse_name varchar(255), doctor_name varchar(255), division varchar(255), data varchar(8000), PRIMARY KEY (id));";
 
 		try {
 			stmt.executeUpdate(query);
@@ -39,7 +58,7 @@ public class test {
 			c.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 		// PreparedStatement prepStmt = c.prepareStatement("SELECT * from ?");
 
