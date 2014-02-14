@@ -19,7 +19,7 @@ public class GUI extends JFrame {
 	public GUI() {
 
 		JPanel container = new JPanel();
-		container.setPreferredSize(new Dimension(500, 400));
+		container.setPreferredSize(new Dimension(600, 600));
 		container.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		SearchField search = new SearchField();
@@ -33,10 +33,18 @@ public class GUI extends JFrame {
 		leftBar.setLayout(new BorderLayout());
 		leftBar.setBorder(new EmptyBorder(0, 0, 0, 10));
 
-		String[] data = { "Mister cool", "danne bogdan olsson pyssling",
-				"ptsuw", "iou789ah8" };
+		String[] data = { "Mister Cool", "Bogdan Olsson", "Nikola Tesla",
+				"Per Holm", "Jaina Proudmoore", "Banarne", "Murmeldjuret",
+				"Flavius", "George H.W. Bush", "Deckard Cain",
+				"Walking Talking Stephen Hawking", "Ann Ahl", "Biggus Dickus",
+				"Daniels mystiska databas", "Jesper Rönndahl",
+				"Svampbob Trekant", "Mamma, jag kan inte sova",
+				"Väx upp din skitunge", "Det här är produktivt",
+				"Börjar få slut på idéer", "Handmark ska träna nu",
+				"Dags att pusha gitrepot", "Ses på måndag eller något sånt",
+				"3vlig helg grabbar!" };
 		JList list = new JList(data);
-		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
 		JScrollPane listScroller = new JScrollPane(list,
@@ -68,8 +76,12 @@ public class GUI extends JFrame {
 		JPanel rightBar = new JPanel();
 		rightBar.setLayout(new BorderLayout());
 
-		JTextArea textArea = new JTextArea();
-		rightBar.add(textArea);
+		JTextArea textArea = new FileArea();
+		JScrollPane textScroller = new JScrollPane(textArea,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+		rightBar.add(textScroller);
 
 		JButton save = new SaveButton();
 		rightBar.add(save, BorderLayout.SOUTH);

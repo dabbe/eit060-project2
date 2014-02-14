@@ -14,7 +14,7 @@ public class EditButton extends JButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO: server request for selected file
-		System.out.println("No such file to be edited");
+		System.out.println("Your level of clearance is not sufficient for this action.");
 	}
 
 }
