@@ -1,7 +1,6 @@
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
@@ -9,7 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 
 public class GUI extends JFrame {
 
@@ -18,15 +19,23 @@ public class GUI extends JFrame {
 	public GUI() {
 
 		JPanel container = new JPanel();
-		container.setPreferredSize(new Dimension(350, 400));
+		container.setPreferredSize(new Dimension(500, 400));
+		container.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		SearchField search = new SearchField();
-		container.add(search);
+		container.setLayout(new BorderLayout());
+		container.add(search, BorderLayout.NORTH);
+
+		JPanel main = new JPanel();
+		main.setBorder(new EmptyBorder(10, 0, 0, 0));
+
+		JPanel leftBar = new JPanel();
+		leftBar.setLayout(new BorderLayout());
+		leftBar.setBorder(new EmptyBorder(0, 0, 0, 10));
 
 		String[] data = { "Mister cool", "danne bogdan olsson pyssling",
 				"ptsuw", "iou789ah8" };
 		JList<String> list = new JList<String>(data);
-		list.setPreferredSize(new Dimension(300, 300));
 
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
@@ -35,18 +44,32 @@ public class GUI extends JFrame {
 		JScrollPane listScroller = new JScrollPane(list);
 		listScroller.setPreferredSize(new Dimension(250, 80));
 
-		container.add(list, BorderLayout.CENTER);
+		leftBar.add(list);
 
 		// TODO: switch (user) {
+		
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(3, 1));
 
 		JButton create = new CreateButton();
-		container.add(create);
+		buttons.add(create);
 
 		JButton delete = new DeleteButton();
-		container.add(delete);
+		buttons.add(delete);
 
 		JButton edit = new EditButton();
-		container.add(edit);
+		buttons.add(edit);
+		
+		leftBar.add(buttons, BorderLayout.SOUTH);
+
+		main.setLayout(new GridLayout(1, 2));
+
+		main.add(leftBar);
+
+		JTextArea textArea = new JTextArea();
+		main.add(textArea);
+
+		container.add(main);
 
 		add(container);
 		pack();
