@@ -36,19 +36,17 @@ public class GUI extends JFrame {
 		String[] data = { "Mister cool", "danne bogdan olsson pyssling",
 				"ptsuw", "iou789ah8" };
 		JList list = new JList(data);
-		list.setPreferredSize(new Dimension(300, 300));
-
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
+		JScrollPane listScroller = new JScrollPane(list,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		JScrollPane listScroller = new JScrollPane(list);
-		listScroller.setPreferredSize(new Dimension(250, 80));
-
-		leftBar.add(list);
+		leftBar.add(listScroller);
 
 		// TODO: switch (user) {
-		
+
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridLayout(3, 1));
 
@@ -60,16 +58,23 @@ public class GUI extends JFrame {
 
 		JButton edit = new EditButton();
 		buttons.add(edit);
-		
+
 		leftBar.add(buttons, BorderLayout.SOUTH);
 
 		main.setLayout(new GridLayout(1, 2));
 
 		main.add(leftBar);
 
-		JTextArea textArea = new JTextArea();
-		main.add(textArea);
+		JPanel rightBar = new JPanel();
+		rightBar.setLayout(new BorderLayout());
 
+		JTextArea textArea = new JTextArea();
+		rightBar.add(textArea);
+
+		JButton save = new SaveButton();
+		rightBar.add(save, BorderLayout.SOUTH);
+
+		main.add(rightBar);
 		container.add(main);
 
 		add(container);
