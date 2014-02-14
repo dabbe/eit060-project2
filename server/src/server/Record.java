@@ -9,9 +9,10 @@ public class Record {
 	private String division;
 	private String data;
 	
-	public Record(int id, String patient, String doctor, String division, String data){
+	public Record(int id, String patient, String nurse, String doctor, String division, String data){
 		this.id = id;
 		this.patient = patient;
+		this.nurse = nurse;
 		this.doctor = doctor;
 		this.division = division;
 		this.data = data;
