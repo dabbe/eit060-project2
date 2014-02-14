@@ -14,7 +14,7 @@ public class DeleteButton extends JButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO: delete selected file
-		System.out.println("no such file");
+		System.out.println("Your level of clearance is not sufficient for this action.");
 	}
 
 }

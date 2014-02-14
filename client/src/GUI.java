@@ -1,7 +1,6 @@
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
@@ -9,7 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 
 public class GUI extends JFrame {
 
@@ -18,35 +19,75 @@ public class GUI extends JFrame {
 	public GUI() {
 
 		JPanel container = new JPanel();
-		container.setPreferredSize(new Dimension(350, 400));
+		container.setPreferredSize(new Dimension(600, 600));
+		container.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		SearchField search = new SearchField();
-		container.add(search);
+		container.setLayout(new BorderLayout());
+		container.add(search, BorderLayout.NORTH);
 
-		String[] data = { "Mister cool", "danne bogdan olsson pyssling",
-				"ptsuw", "iou789ah8" };
+		JPanel main = new JPanel();
+		main.setBorder(new EmptyBorder(10, 0, 0, 0));
+
+		JPanel leftBar = new JPanel();
+		leftBar.setLayout(new BorderLayout());
+		leftBar.setBorder(new EmptyBorder(0, 0, 0, 10));
+
+		String[] data = { "Mister Cool", "Bogdan Olsson", "Nikola Tesla",
+				"Per Holm", "Jaina Proudmoore", "Banarne", "Murmeldjuret",
+				"Flavius", "George H.W. Bush", "Deckard Cain",
+				"Walking Talking Stephen Hawking", "Ann Ahl", "Biggus Dickus",
+				"Daniels mystiska databas", "Jesper Rönndahl",
+				"Svampbob Trekant", "Mamma, jag kan inte sova",
+				"Väx upp din skitunge", "Det här är produktivt",
+				"Börjar få slut på idéer", "Handmark ska träna nu",
+				"Dags att pusha gitrepot", "Ses på måndag eller något sånt",
+				"3vlig helg grabbar!" };
 		JList list = new JList(data);
-		list.setPreferredSize(new Dimension(300, 300));
-
-		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
+		JScrollPane listScroller = new JScrollPane(list,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		JScrollPane listScroller = new JScrollPane(list);
-		listScroller.setPreferredSize(new Dimension(250, 80));
-
-		container.add(list, BorderLayout.CENTER);
+		leftBar.add(listScroller);
 
 		// TODO: switch (user) {
 
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(3, 1));
+
 		JButton create = new CreateButton();
-		container.add(create);
+		buttons.add(create);
 
 		JButton delete = new DeleteButton();
-		container.add(delete);
+		buttons.add(delete);
 
 		JButton edit = new EditButton();
-		container.add(edit);
+		buttons.add(edit);
+
+		leftBar.add(buttons, BorderLayout.SOUTH);
+
+		main.setLayout(new GridLayout(1, 2));
+
+		main.add(leftBar);
+
+		JPanel rightBar = new JPanel();
+		rightBar.setLayout(new BorderLayout());
+
+		JTextArea textArea = new FileArea();
+		JScrollPane textScroller = new JScrollPane(textArea,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+		rightBar.add(textScroller);
+
+		JButton save = new SaveButton();
+		rightBar.add(save, BorderLayout.SOUTH);
+
+		main.add(rightBar);
+		container.add(main);
 
 		add(container);
 		pack();
