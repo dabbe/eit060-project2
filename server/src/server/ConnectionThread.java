@@ -37,6 +37,7 @@ public class ConnectionThread extends Thread {
 				String op = scan.next();
 				System.out.println("Received " + op);
 				if (op.equals("GET")) {
+					
 					out.println("TEG");
 				} else if (op.equals("PUT")) {
 					out.println("TUP");
