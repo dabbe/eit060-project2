@@ -45,14 +45,14 @@ public class DatabaseManager {
 
 	}
 
-	public void createRecord(String patient, String nurse, String doctor, String division, String data) throws SQLException {
+	public void createRecord(Record record) throws SQLException {
 		String query = "INSERT INTO records (patient, nurse, doctor, division, data) VALUES(?,?,?,?,?)";
 		PreparedStatement prepStmt = c.prepareStatement(query);
-		prepStmt.setString(1, patient);
-		prepStmt.setString(2, nurse);
-		prepStmt.setString(3, doctor);
-		prepStmt.setString(4, division);
-		prepStmt.setString(5, data);
+		prepStmt.setString(1, record.getPatient());
+		prepStmt.setString(2, record.getNurse());
+		prepStmt.setString(3, record.getDoctor());
+		prepStmt.setString(4, record.getDivision());
+		prepStmt.setString(5, record.getData());
 		prepStmt.executeUpdate();
 		prepStmt.close();
 	}
@@ -61,6 +61,20 @@ public class DatabaseManager {
 		String query = "DELETE FROM records WHERE id=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setInt(1, id);
+		prepStmt.executeUpdate();
+		prepStmt.close();
+	}
+	
+	public void updatePatientRecord(Record record) throws SQLException{
+		String query = "UPDATE records SET patient=?,nurse=?,doctor=?,division=?,data=? WHERE id=?";
+		PreparedStatement prepStmt = c.prepareStatement(query);
+		prepStmt.setString(1, record.getPatient());
+		prepStmt.setString(2, record.getNurse());
+		prepStmt.setString(3, record.getDoctor());
+		prepStmt.setString(4, record.getDivision());
+		prepStmt.setString(5, record.getData());
+		prepStmt.setInt(6, record.getId());
+		
 		prepStmt.executeUpdate();
 		prepStmt.close();
 	}
