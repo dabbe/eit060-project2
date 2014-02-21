@@ -1,0 +1,25 @@
+#!/bin/bash
+# makecert
+
+if [ "$#" -ne 2 ]; then
+	echo "USAGE: makecert <CN> <OU>"
+	exit
+fi
+
+c="CN="$1",OU="$2""
+echo $c
+
+keytool -genkey -alias client -keyalg RSA -keystore ckey -keypass password -storepass password -dname "$c"
+
+keytool -certreq -alias client -file req.csr -keystore ckey -storepass password
+
+openssl x509 -req -CAkey ca.key -CA ca.crt -set_serial 1 -in req.csr -out signed.crt -days 999 -passin pass:password
+
+keytool -import -file ca.crt -alias ca -keystore ckey -storepass password -noprompt
+
+keytool -import -file signed.crt -alias client -keystore ckey -storepass password -noprompt
+
+keytool -import -file ca.crt -alias ca -keystore ctrust -storepass password -noprompt
+
+rm req.csr
+rm signed.crt
