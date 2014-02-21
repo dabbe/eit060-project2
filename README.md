@@ -14,9 +14,13 @@ Computer Security EIT060
 
 
 = Server =
-- GUI/Terminal-applikation för att editera saker i databasen
-	* Danne kirrar metoderna på serversidan som anropas av dessa events (alt. också GUI till det)
 
+
+
+
+> Log! Operation|När|Vem|aCESSGRANTEd
+> Access Control för server side sköts av OU-parameter i certifikat, där den är Patient/Nurse/Doctor/Gov
+ 	Kolla vad den är, jämför med action (nurse får t.ex. inte ta bort), om getOU != doctor => Tillåt inte
 
 
 

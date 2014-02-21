@@ -21,6 +21,7 @@ public class ConnectionThread extends Thread {
 		X509Certificate cert = (X509Certificate) session
 				.getPeerCertificateChain()[0];
 		this.peerName = cert.getSubjectDN().getName();
+		System.out.println(peerName + " Connected!");
 	}
 
 	public void run() {
@@ -37,6 +38,7 @@ public class ConnectionThread extends Thread {
 				String op = scan.next();
 				System.out.println("Received " + op);
 				if (op.equals("GET")) {
+					
 					out.println("TEG");
 				} else if (op.equals("PUT")) {
 					out.println("TUP");
