@@ -14,6 +14,8 @@ public class Server {
 		int port = -1;
 		if (args.length >= 1) {
 			port = Integer.parseInt(args[0]);
+		} else{
+			port = 9999;
 		}
 		
 		try {
@@ -52,8 +54,8 @@ public class Server {
 			KeyStore ks = KeyStore.getInstance("JKS");
 			KeyStore ts = KeyStore.getInstance("JKS");
 			char[] password = "password".toCharArray();
-			ks.load(new FileInputStream("serverkeystore"), password);
-			ts.load(new FileInputStream("servertruststore"), password);
+			ks.load(new FileInputStream(new File("CA/serverkeystore").getAbsolutePath()), password);
+			ts.load(new FileInputStream(new File("CA/servertruststore").getAbsolutePath()), password);
 			kmf.init(ks, password);
 			tmf.init(ts);
 			ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
