@@ -3,11 +3,15 @@ package server;
 import java.io.*;
 import java.net.*;
 import java.security.KeyStore;
+
 import javax.net.*;
 import javax.net.ssl.*;
 import javax.security.cert.X509Certificate;
 
+import com.google.gson.Gson;
+
 public class Server {
+	
 	
 	public static void main(String args[]) {
 		System.out.println("\nServer Started\n");
@@ -17,7 +21,6 @@ public class Server {
 		} else{
 			port = 9999;
 		}
-		
 		try {
 			SSLServerSocketFactory ssf = getServerSocketFactory("TLS");
 			SSLServerSocket ss = (SSLServerSocket) ssf.createServerSocket(port);

@@ -10,15 +10,20 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import javax.security.cert.X509Certificate;
 
+import com.google.gson.Gson;
+
 public class ConnectionThread extends Thread {
 	private SSLSocket socket;
 	private Monitor monitor;
 	private String CN;
 	private String OU;
+	
+	private Gson gson;
 
 	public ConnectionThread(SSLSocket socket, Monitor monitor) throws IOException {
 		this.socket = socket;
 		this.monitor = monitor;
+		this.gson = new Gson();
 		
 		SSLSession session = socket.getSession();
 		X509Certificate cert = (X509Certificate) session.getPeerCertificateChain()[0];
@@ -51,8 +56,7 @@ public class ConnectionThread extends Thread {
 				String op = scan.next();
 				System.out.println("Received " + op);
 				if (op.equals("GET")) {
-					monitor.getRecords(CN, OU);
-					out.println("TEG");
+					out.println(gson.toJson(monitor.getRecords(CN, OU)));
 				} else if (op.equals("PUT")) {
 					out.println("TUP");
 				} else if (op.equals("ADD")) {
