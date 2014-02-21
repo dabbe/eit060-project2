@@ -18,7 +18,8 @@ public class ConnectionThread extends Thread {
 		this.socket = socket;
 
 		SSLSession session = socket.getSession();
-		X509Certificate cert = (X509Certificate) session.getPeerCertificateChain()[0];
+		X509Certificate cert = (X509Certificate) session
+				.getPeerCertificateChain()[0];
 		this.peerName = cert.getSubjectDN().getName();
 	}
 
@@ -27,29 +28,20 @@ public class ConnectionThread extends Thread {
 			PrintWriter out = null;
 			BufferedReader in = null;
 			out = new PrintWriter(socket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(
+					socket.getInputStream()));
 
 			String clientMsg = null;
 			while ((clientMsg = in.readLine()) != null) {
 				Scanner scan = new Scanner(clientMsg);
 				String op = scan.next();
 				System.out.println("Received " + op);
-				switch (op) {
-				case "GET":
-					// code for auth and sending record
-					break;
-				case "PUT":
-					// code for auth and updating record
-					break;
-				case "DELETE":
-					// code for auth and deleting record
-					break;
-				case "ADD":
-					// code for auth and adding record
-					break;
-				default:
+				if (op.equals("GET")) {
+				} else if (op.equals("PUT")) {
+				} else if (op.equals("ADD")) {
+				} else if (op.equals("DELETE")) {
+				} else {
 					System.out.println("Unrecognized operation " + op);
-					break;
 				}
 				scan.close();
 			}
