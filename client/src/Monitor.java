@@ -32,4 +32,8 @@ public class Monitor {
 	public static void main(String[] args){
 		new Monitor();
 	}
+
+	public void closeConnection() {
+		c.close();
+	}
 }

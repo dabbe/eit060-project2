@@ -13,11 +13,6 @@ public class FileArea extends JTextArea implements Observer {
 
 	@Override
 	public void update(Record record) {
-//		setText(le.getRecords());
-	}
-
-	public void update(ListEntry le) {
-		// TODO Auto-generated method stub
-		
+		setText(record.getData());
 	}
 }

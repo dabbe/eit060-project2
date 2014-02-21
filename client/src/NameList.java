@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -16,11 +17,13 @@ public class NameList extends JList<Record> implements ListSelectionListener {
 
 	private DefaultListModel<Record> model;
 	private LinkedList<Observer> observers;
+	private Monitor monitor;
 
 	@SuppressWarnings("unchecked")
-	public NameList(DefaultListModel model) {
+	public NameList(DefaultListModel model, Monitor monitor) {
 		super();
 		this.model = model;
+		this.monitor = monitor;
 		setModel(model);
 		addListSelectionListener(this);
 		observers = new LinkedList<Observer>();
@@ -33,24 +36,27 @@ public class NameList extends JList<Record> implements ListSelectionListener {
 		observers.add(o);
 	}
 
+	public void updateList(String name) {
+		List<Record> records = monitor.getRecords(name);
+
+		model.clear();
+		for (Record record : records) {
+			model.addElement(record);
+		}
+		this.setModel(model);
+
+	}
+
 	public void updateAll(Record record) {
 		for (Observer o : observers) {
 			o.update(record);
 		}
 	}
 
-	public void replaceList(ArrayList<Record> data) {
-		model.clear();
-		for (Record entry : data) {
-			model.addElement(entry);
-		}
-		this.setModel(model);
-	}
-
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-		
-		updateAll(model.get(getMinSelectionIndex()));
+		if(getSelectedIndex() < 0) return;
+		updateAll(model.get(getSelectedIndex()));
 	}
 
 }
