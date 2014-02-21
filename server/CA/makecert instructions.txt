@@ -1,0 +1,8 @@
+IN:
+./makecert '<name>' '<member type>'
+
+OUT:
+ckey (keystore)
+ctrust (truststore)
+
+Måste ta bort 'ckey' och 'ctrust' från mappen innan det körs

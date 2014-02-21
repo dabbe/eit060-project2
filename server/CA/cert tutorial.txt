@@ -1,6 +1,0 @@
-keytool -genkey -alias somealias -keyalg RSA -keystore keystorename
-keytool -certreq -alias somealias -file req.csr -keystore keystorename
-openssl x509 -req -CAkey ca.key -CA ca.crt -set_serial 1 -in req.csr -out signed.crt -days 999
-keytool -import -file ca.crt -alias ca -keystore keystorename
-keytool -import -file signed.crt -alias somealias -keystore keystorename
-keytool -import -file ca.crt -alias ca -keystore truststorename
