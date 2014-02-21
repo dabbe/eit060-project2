@@ -36,8 +36,8 @@ public class NameList extends JList implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-//		System.out.println("asdasd"); // why double print ;(
-		updateAll(data[arg0.getFirstIndex()]);
+		// System.out.println("asdasd"); // why double print ;(
+		updateAll(data[getMinSelectionIndex()]);
 	}
 
 }
