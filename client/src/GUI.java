@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 
 import javax.swing.JButton;
@@ -75,12 +76,18 @@ public class GUI extends JFrame {
 
 		JPanel rightBar = new JPanel();
 		rightBar.setLayout(new BorderLayout());
+		
+		JTextArea header = new JTextArea();
+		header.setEditable(false);
+		header.setMargin(new Insets(2, 4, 2, 4));
+		header.setText("Name: Elliot Jalgard\nDoctor: Gordon Freeman\nNurse: Din mamma\nDistrict: 17"); // TODO
+		rightBar.add(header, BorderLayout.NORTH);
 
 		JTextArea textArea = new FileArea();
 		JScrollPane textScroller = new JScrollPane(textArea,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
+		textArea.setMargin(new Insets(2, 4, 2, 4));
 		rightBar.add(textScroller);
 
 		JButton save = new SaveButton();
