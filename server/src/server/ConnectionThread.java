@@ -21,6 +21,7 @@ public class ConnectionThread extends Thread {
 		X509Certificate cert = (X509Certificate) session
 				.getPeerCertificateChain()[0];
 		this.peerName = cert.getSubjectDN().getName();
+		System.out.println(peerName + " Connected!");
 	}
 
 	public void run() {
