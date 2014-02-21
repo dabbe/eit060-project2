@@ -6,6 +6,8 @@ import javax.swing.JButton;
 
 public class DeleteButton extends JButton implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
+
 	public DeleteButton() {
 		super("Delete");
 		addActionListener(this);

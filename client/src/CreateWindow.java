@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -13,18 +12,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class CreateWindow extends JFrame {
-	
+
+	private static final long serialVersionUID = 1L;
 	private JTextField patientName, division, nurse, data;
 
 	public CreateWindow() {
-		
+
 		JPanel container = new JPanel();
 		container.setLayout(new GridLayout(4, 2));
-		
+
 		container.add(new JLabel("Patient name:"));
 		patientName = new JTextField();
 		container.add(patientName);
-		
+
 		container.add(new JLabel("Division:"));
 		division = new JTextField();
 		container.add(division);
@@ -32,12 +32,11 @@ public class CreateWindow extends JFrame {
 		container.add(new JLabel("Nurse:"));
 		nurse = new JTextField();
 		container.add(nurse);
-		
+
 		container.add(new JLabel("Medical data:"));
 		data = new JTextField();
 		container.add(data);
-		
-		
+
 		add(container);
 		add(new OKButton(), BorderLayout.SOUTH);
 
@@ -45,14 +44,16 @@ public class CreateWindow extends JFrame {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
 				- getSize().height / 2);
-		
+
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 	}
-	
+
 	public class OKButton extends JButton implements ActionListener {
-		
+
+		private static final long serialVersionUID = 1L;
+
 		public OKButton() {
 			super("Create");
 			addActionListener(this);
@@ -62,7 +63,7 @@ public class CreateWindow extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println(patientName.getText());
 		}
-		
+
 	}
 
 }

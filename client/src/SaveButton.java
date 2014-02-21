@@ -5,6 +5,8 @@ import javax.swing.JButton;
 
 public class SaveButton extends JButton implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
+
 	public SaveButton() {
 		super("Save");
 		addActionListener(this);

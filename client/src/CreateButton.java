@@ -6,7 +6,8 @@ import javax.swing.JButton;
 
 public class CreateButton extends JButton implements ActionListener {
 
-	
+	private static final long serialVersionUID = 1L;
+
 	public CreateButton() {
 		super("Create new record");
 		addActionListener(this);
