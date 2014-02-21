@@ -40,7 +40,7 @@ public class HospitalConnection {
 
 	public String getGetResponse() {
 		try {
-			Request request = new Request(Request.GET_RECORDS, null);
+			Request request = new Request(Request.GET_RECORDS, null); 
 			out.println(gson.toJson(request));
 			out.flush();
 			return in.readLine();

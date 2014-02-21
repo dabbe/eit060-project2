@@ -55,11 +55,10 @@ public class ConnectionThread extends Thread {
 			String clientMsg = null;
 			while ((clientMsg = in.readLine()) != null) {
 				Scanner scan = new Scanner(clientMsg);
-				String op = scan.next();
-				System.out.println("Received " + op);
+//				String op = scan.next();
+//				System.out.println("Received " + op);
 				
 				Request request = gson.fromJson(clientMsg, Request.class);
-				
 				int type = request.getType();
 				
 				switch(type){
