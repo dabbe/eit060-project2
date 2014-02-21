@@ -12,39 +12,38 @@ import javax.security.cert.X509Certificate;
 
 public class ConnectionThread extends Thread {
 	private SSLSocket socket;
+	private Monitor monitor;
 	private String CN;
 	private String OU;
 
-	public ConnectionThread(SSLSocket socket) throws IOException {
+	public ConnectionThread(SSLSocket socket, Monitor monitor) throws IOException {
 		this.socket = socket;
-
+		this.monitor = monitor;
+		
 		SSLSession session = socket.getSession();
-		X509Certificate cert = (X509Certificate) session
-				.getPeerCertificateChain()[0];
+		X509Certificate cert = (X509Certificate) session.getPeerCertificateChain()[0];
 		splitDN(cert.getSubjectDN().getName());
 	}
-	
+
 	private void splitDN(String dn) {
 		String[] params = dn.split(",");
 		for (String s : params) {
 			String temp = s.trim();
 			String[] splitParams = temp.split("=");
-			if(splitParams[0].equals("CN")){
+			if (splitParams[0].equals("CN")) {
 				CN = splitParams[1];
-			} else if(splitParams[0].equals("OU")){
+			} else if (splitParams[0].equals("OU")) {
 				OU = splitParams[1];
 			}
 		}
 	}
-
 
 	public void run() {
 		try {
 			PrintWriter out = null;
 			BufferedReader in = null;
 			out = new PrintWriter(socket.getOutputStream(), true);
-			in = new BufferedReader(new InputStreamReader(
-					socket.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 			String clientMsg = null;
 			while ((clientMsg = in.readLine()) != null) {
@@ -52,13 +51,15 @@ public class ConnectionThread extends Thread {
 				String op = scan.next();
 				System.out.println("Received " + op);
 				if (op.equals("GET")) {
-					
+					monitor.getRecords(CN, OU);
 					out.println("TEG");
 				} else if (op.equals("PUT")) {
 					out.println("TUP");
 				} else if (op.equals("ADD")) {
+//					monitor.createPatient();
 					out.println("DDA");
 				} else if (op.equals("DELETE")) {
+//					monitor.delete();
 					out.println("ETELED");
 				} else {
 					System.out.println("Unrecognized operation " + op);

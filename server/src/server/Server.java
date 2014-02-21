@@ -8,12 +8,14 @@ import javax.net.ssl.*;
 import javax.security.cert.X509Certificate;
 
 public class Server {
+	
 	public static void main(String args[]) {
 		System.out.println("\nServer Started\n");
 		int port = -1;
 		if (args.length >= 1) {
 			port = Integer.parseInt(args[0]);
 		}
+		
 		try {
 			SSLServerSocketFactory ssf = getServerSocketFactory("TLS");
 			SSLServerSocket ss = (SSLServerSocket) ssf.createServerSocket(port);
@@ -26,12 +28,13 @@ public class Server {
 	}
 
 	private static void listen(SSLServerSocket server) {
+		Monitor monitor = new Monitor();
 		while (true) {
 			try {
 				System.out.println("Listening...");
 				SSLSocket socket = (SSLSocket) server.accept();
 				System.out.println("Processing connection");
-				new ConnectionThread(socket).start();
+				new ConnectionThread(socket, monitor).start();
 			} catch (IOException e) {
 				System.out.println("Failed to accept or verify to connection");
 				e.printStackTrace();

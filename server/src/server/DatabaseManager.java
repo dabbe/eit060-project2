@@ -1,6 +1,7 @@
 package server;
 
 import java.sql.Connection;
+import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +23,7 @@ public class DatabaseManager {
 	private Connection c = null;
 
 	public DatabaseManager() throws ClassNotFoundException, SQLException {
-		Class.forName("org.sqlite.JDBC");
+		Class.forName("org.sqlite.JDBC");	
 		c = DriverManager.getConnection("jdbc:sqlite:eit060.db");
 	}
 
@@ -79,21 +80,21 @@ public class DatabaseManager {
 		prepStmt.close();
 	}
 
-	public ArrayList<Record> getPatientRecords(String patient) throws SQLException {
+	public ArrayList<Record> getRecordWithPatient(String patient) throws SQLException {
 		String query = "SELECT * FROM records WHERE patient=?";
-		return getPatientFromName(query, patient);
+		return getRecordFromName(query, patient);
 	}
 	
-	public ArrayList<Record> getPatientRecordsWithNurse(String nurse) throws SQLException {
+	public ArrayList<Record> getRecordsWithNurse(String nurse) throws SQLException {
 		String query = "SELECT * FROM records WHERE nurse=?";
-		return getPatientFromName(query, nurse);
+		return getRecordFromName(query, nurse);
 	}
-	public ArrayList<Record> getPatientRecordsWithDoctor(String doctor) throws SQLException {
+	public ArrayList<Record> getRecordsWithDoctor(String doctor) throws SQLException {
 		String query = "SELECT * FROM records WHERE doctor=?";
-		return getPatientFromName(query, doctor);
+		return getRecordFromName(query, doctor);
 	}
 	
-	private ArrayList<Record> getPatientFromName(String query, String name) throws SQLException {
+	private ArrayList<Record> getRecordFromName(String query, String name) throws SQLException {
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, name);
 		ResultSet rs = prepStmt.executeQuery();
