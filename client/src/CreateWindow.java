@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class CreateWindow extends JFrame {
 
@@ -20,6 +21,7 @@ public class CreateWindow extends JFrame {
 
 		JPanel container = new JPanel();
 		container.setLayout(new GridLayout(4, 2));
+		container.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		container.add(new JLabel("Patient name:"));
 		patientName = new JTextField();
