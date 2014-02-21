@@ -2,7 +2,7 @@ IN:
 ./makecert '<name>' '<member type>'
 
 OUT:
-ckey (keystore)
-ctrust (truststore)
+clientkeystore (keystore)
+clienttruststore (truststore)
 
-Måste ta bort 'ckey' och 'ctrust' från mappen innan det körs
+Måste ta bort 'clientkeystore' och 'clienttruststore' från mappen innan det körs

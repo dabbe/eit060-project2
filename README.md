@@ -30,3 +30,4 @@ För att skapa certificate:
 gå till server/CA/
 kör ./makecert '<name>' '<member type>'
 output = clientkeystore, clienttruststore
+
