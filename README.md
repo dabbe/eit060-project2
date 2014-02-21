@@ -24,4 +24,9 @@ java -classpath ".:sqlite-jdbc-3.7.2.jar" server.Server 9999
  	Kolla vad den är, jämför med action (nurse får t.ex.< inte ta bort), om getOU != doctor => Tillåt inte
 
 
+= Certificate =
 
+För att skapa certificate:
+gå till server/CA/
+kör ./makecert '<name>' '<member type>'
+output = clientkeystore, clienttruststore
