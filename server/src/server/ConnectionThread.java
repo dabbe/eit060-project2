@@ -10,6 +10,8 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import javax.security.cert.X509Certificate;
 
+import resources.Request;
+
 import com.google.gson.Gson;
 
 public class ConnectionThread extends Thread {
@@ -55,6 +57,20 @@ public class ConnectionThread extends Thread {
 				Scanner scan = new Scanner(clientMsg);
 				String op = scan.next();
 				System.out.println("Received " + op);
+				
+				Request request = gson.fromJson(clientMsg, Request.class);
+				
+				int type = request.getType();
+				
+				switch(type){
+				case Request.GET_RECORDS:
+					out.println(gson.toJson(monitor.getRecords(CN, OU)));
+					break;
+				case Request.CREATE_NEW_PATIENT:
+					break;
+				}
+				
+				/*
 				if (op.equals("GET")) {
 					out.println(gson.toJson(monitor.getRecords(CN, OU)));
 				} else if (op.equals("PUT")) {
@@ -68,7 +84,7 @@ public class ConnectionThread extends Thread {
 				} else {
 					System.out.println("Unrecognized operation " + op);
 					out.println("IDUNNOLOL");
-				}
+				}*/
 				scan.close();
 				out.flush();
 			}

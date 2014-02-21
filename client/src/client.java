@@ -11,7 +11,7 @@ public class client {
 
     public static void main(String[] args) throws Exception {
         String host = null;
-        int port = -1;
+        int port = -1;/*
         for (int i = 0; i < args.length; i++) {
             System.out.println("args[" + i + "] = " + args[i]);
         }
@@ -19,22 +19,28 @@ public class client {
             System.out.println("USAGE: java client host port");
             System.exit(-1);
         }
-        try { /* get input parameters */
+        try { 
             host = args[0];
             port = Integer.parseInt(args[1]);
         } catch (IllegalArgumentException e) {
             System.out.println("USAGE: java client host port");
             System.exit(-1);
-        }
+        }*/
+    	
+    	host = "localhost";
+    	port = 9999;
+        
+        
         
         HospitalConnection c = null;
         try { /* set up a key manager for client authentication */
         	c = new HospitalConnection(host, port);
-        	System.out.println("GET? " + c.getResponse("GET"));
+        	System.out.println("GET? " + c.getGetResponse());
+        	/*System.out.println("GET? " + c.getResponse("GET"));
         	System.out.println("PUT? " + c.getResponse("PUT"));
         	System.out.println("ADD? " + c.getResponse("ADD"));
         	System.out.println("DELETE? " + c.getResponse("DELETE"));
-        	System.out.println("RANDOM? " + c.getResponse("RANDOM"));
+        	System.out.println("RANDOM? " + c.getResponse("RANDOM"));*/
         	c.close();
         } catch (Exception e) {
             e.printStackTrace();
