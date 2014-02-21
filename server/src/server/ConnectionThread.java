@@ -37,13 +37,19 @@ public class ConnectionThread extends Thread {
 				String op = scan.next();
 				System.out.println("Received " + op);
 				if (op.equals("GET")) {
+					out.println("TEG");
 				} else if (op.equals("PUT")) {
+					out.println("TUP");
 				} else if (op.equals("ADD")) {
+					out.println("DDA");
 				} else if (op.equals("DELETE")) {
+					out.println("ETELED");
 				} else {
 					System.out.println("Unrecognized operation " + op);
+					out.println("IDUNNOLOL");
 				}
 				scan.close();
+				out.flush();
 			}
 			in.close();
 			out.close();
