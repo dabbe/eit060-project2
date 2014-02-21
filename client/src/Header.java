@@ -2,6 +2,8 @@ import java.awt.Insets;
 
 import javax.swing.JTextArea;
 
+import server.Record;
+
 public class Header extends JTextArea implements Observer {
 
 	private static final long serialVersionUID = 1L;
@@ -13,11 +15,9 @@ public class Header extends JTextArea implements Observer {
 	}
 
 	@Override
-	public void update(ListEntry le) {
-		String[] temp = le.getHeader().split("\n");
-		if (temp.length < 3) System.out.println("Need 3 lines in header");
-		else setText("Name: " + le.toString() + "\nDoctor: " + temp[0]
-				+ "\nNurse: " + temp[1] + "\nDistrict: " + temp[2]);
+	public void update(Record record) {
+		setText("Name: " + record.getPatient() + "\nDoctor: " + record.getDoctor() + "\nNurse: " + record.getNurse()
+				+ "\nDivision: " + record.getDivision());
 	}
 
 }

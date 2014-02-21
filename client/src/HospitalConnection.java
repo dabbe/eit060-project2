@@ -38,7 +38,7 @@ public class HospitalConnection {
 		out = new PrintWriter(socket.getOutputStream());
 	}
 
-	public String getGetResponse() {
+	public String getRecords() {
 		try {
 			Request request = new Request(Request.GET_RECORDS, null); 
 			out.println(gson.toJson(request));

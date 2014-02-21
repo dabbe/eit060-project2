@@ -1,5 +1,7 @@
 import javax.swing.JTextArea;
 
+import server.Record;
+
 public class FileArea extends JTextArea implements Observer {
 	
 	private static final long serialVersionUID = 1L;
@@ -10,7 +12,12 @@ public class FileArea extends JTextArea implements Observer {
 	}
 
 	@Override
+	public void update(Record record) {
+//		setText(le.getRecords());
+	}
+
 	public void update(ListEntry le) {
-		setText(le.getRecords());
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -41,5 +41,22 @@ public class Record {
 	public String getData() {
 		return data;
 	}
+	
+	@Override
+	public String toString() {
+		return data;
+	}
+	
+	public String toLongString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("ID: " + id);
+		sb.append("\nPatient: " + patient);
+		sb.append("\nNurse: " + nurse);
+		sb.append("\nDoctor: " + doctor);
+		sb.append("\nDivision: " + division);
+		sb.append("\nData: " + data);
+		
+		return sb.toString();
+	}
 
 }

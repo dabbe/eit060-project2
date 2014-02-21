@@ -3,24 +3,33 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import server.Record;
+
 public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public GUI() {
+	private Monitor monitor;
+
+	public GUI(Monitor monitor) {
+		this.monitor = monitor;
+		
+		DefaultListModel<Record> model = new DefaultListModel<Record>();
 
 		JPanel container = new JPanel();
 		container.setPreferredSize(new Dimension(600, 600));
 		container.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		SearchField search = new SearchField();
+		SearchField search = new SearchField(monitor, model);
 		container.setLayout(new BorderLayout());
 		container.add(search, BorderLayout.NORTH);
 
@@ -31,17 +40,13 @@ public class GUI extends JFrame {
 		leftBar.setLayout(new BorderLayout());
 		leftBar.setBorder(new EmptyBorder(0, 0, 0, 10));
 
-		ListEntry[] data = {
-				new ListEntry("Elliot Jalgard",
-						"Dr. Freeman\nModer Jord\nBornholm",
-						"medical records\n\nand data osv"),
-				new ListEntry("Mattias \"MSI\" Simonsson",
-						"Dr. Daniel\nJurgina\nAzeroth",
-						"medical records\n\nhej jag heter matiz\nhej") };
+		ArrayList<ListEntry> data = new ArrayList<ListEntry>();
+		data.add(new ListEntry("Elliot Jalgard", "Dr. Freeman\nModer Jord\nBornholm", "medical records\n\nand data osv"));
+		data.add(new ListEntry("Mattias \"MSI\" Simonsson", "Dr. Daniel\nJurgina\nAzeroth",
+				"medical records\n\nhej jag heter matiz\nhej"));
 
-		NameList list = new NameList(data);
-		JScrollPane listScroller = new JScrollPane(list,
-				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		NameList list = new NameList(model);
+		JScrollPane listScroller = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		leftBar.add(listScroller);
 
@@ -72,8 +77,7 @@ public class GUI extends JFrame {
 		rightBar.add(header, BorderLayout.NORTH);
 
 		FileArea textArea = new FileArea();
-		JScrollPane textScroller = new JScrollPane(textArea,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+		JScrollPane textScroller = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		textArea.setMargin(new Insets(2, 4, 2, 4));
 		rightBar.add(textScroller);
@@ -91,16 +95,10 @@ public class GUI extends JFrame {
 		list.addObserver(textArea);
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
-				- getSize().height / 2);
+		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
 
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}
-
-	public static void main(String[] args) {
-		new GUI();
-	}
-
 }

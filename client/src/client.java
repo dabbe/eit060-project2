@@ -35,7 +35,7 @@ public class client {
         HospitalConnection c = null;
         try { /* set up a key manager for client authentication */
         	c = new HospitalConnection(host, port);
-        	System.out.println("GET? " + c.getGetResponse());
+        	System.out.println("GET? " + c.getRecords());
         	/*System.out.println("GET? " + c.getResponse("GET"));
         	System.out.println("PUT? " + c.getResponse("PUT"));
         	System.out.println("ADD? " + c.getResponse("ADD"));
