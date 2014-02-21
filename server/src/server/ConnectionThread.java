@@ -12,7 +12,8 @@ import javax.security.cert.X509Certificate;
 
 public class ConnectionThread extends Thread {
 	private SSLSocket socket;
-	private String peerName;
+	private String CN;
+	private String OU;
 
 	public ConnectionThread(SSLSocket socket) throws IOException {
 		this.socket = socket;
@@ -20,9 +21,22 @@ public class ConnectionThread extends Thread {
 		SSLSession session = socket.getSession();
 		X509Certificate cert = (X509Certificate) session
 				.getPeerCertificateChain()[0];
-		this.peerName = cert.getSubjectDN().getName();
-		System.out.println(peerName + " Connected!");
+		splitDN(cert.getSubjectDN().getName());
 	}
+	
+	private void splitDN(String dn) {
+		String[] params = dn.split(",");
+		for (String s : params) {
+			String temp = s.trim();
+			String[] splitParams = temp.split("=");
+			if(splitParams[0].equals("CN")){
+				CN = splitParams[1];
+			} else if(splitParams[0].equals("OU")){
+				OU = splitParams[1];
+			}
+		}
+	}
+
 
 	public void run() {
 		try {
