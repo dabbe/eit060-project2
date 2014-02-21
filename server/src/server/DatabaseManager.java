@@ -79,8 +79,21 @@ public class DatabaseManager {
 		prepStmt.close();
 	}
 
-	public ArrayList<Record> getPatientRecords(String name) throws SQLException {
+	public ArrayList<Record> getPatientRecords(String patient) throws SQLException {
 		String query = "SELECT * FROM records WHERE patient=?";
+		return getPatientFromName(query, patient);
+	}
+	
+	public ArrayList<Record> getPatientRecordsWithNurse(String nurse) throws SQLException {
+		String query = "SELECT * FROM records WHERE nurse=?";
+		return getPatientFromName(query, nurse);
+	}
+	public ArrayList<Record> getPatientRecordsWithDoctor(String doctor) throws SQLException {
+		String query = "SELECT * FROM records WHERE doctor=?";
+		return getPatientFromName(query, doctor);
+	}
+	
+	private ArrayList<Record> getPatientFromName(String query, String name) throws SQLException {
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, name);
 		ResultSet rs = prepStmt.executeQuery();
@@ -89,17 +102,17 @@ public class DatabaseManager {
 
 		while (rs.next()) {
 			int id = rs.getInt(1);
-			String patient = rs.getString(2);
-			String nurse = rs.getString(3);
-			String doctor = rs.getString(4);
-			String division = rs.getString(5);
+			String pat = rs.getString(2);
+			String nur = rs.getString(3);
+			String doc = rs.getString(4);
+			String div = rs.getString(5);
 			String data = rs.getString(6);
 
-			records.add(new Record(id, patient, nurse, doctor, division, data));
+			records.add(new Record(id, pat, nur, doc, div, data));
 		}
 		prepStmt.close();
 
 		return records;
 	}
-
+	
 }

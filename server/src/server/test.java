@@ -9,9 +9,8 @@ public class test {
 			dbm = new DatabaseManager();
 			//dbm.createTable();
 	
-			Record record = new Record(3, "Kalle", "Nörse", "Dåktor", "Divishon", "Dataspela");
-			dbm.updatePatientRecord(record);
-
+//			Record record = new Record(3, "Kalle", "Nörse", "Dåktor", "Divishon", "Dataspela");
+//			dbm.updatePatientRecord(record);
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
