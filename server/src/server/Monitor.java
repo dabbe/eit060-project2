@@ -31,16 +31,27 @@ public class Monitor {
 	public synchronized ArrayList<Record> getRecords(String CN, String OU) {
 		System.out.println(CN + " " + OU);
 		try {
-			if (OU.equals(HospitalMember.DOCTOR)) {
+			if(OU.equals(HospitalMember.DOCTOR)) {
 				return dbm.getRecordsWithDoctor(CN);
-			} else if (OU.equals(HospitalMember.NURSE)) {
+			} else if(OU.equals(HospitalMember.NURSE)) {
 				return dbm.getRecordsWithNurse(CN);
-			} else if (OU.equals(HospitalMember.PATIENT)) {
+			} else if(OU.equals(HospitalMember.PATIENT)) {
 				return dbm.getRecordWithPatient(CN);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public void createRecord(String CN, String OU, Record record) {
+		try {
+			if(OU.equals(HospitalMember.DOCTOR)) {
+				record.setDoctor(CN);
+				dbm.createRecord(record);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

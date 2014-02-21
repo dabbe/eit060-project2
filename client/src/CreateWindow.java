@@ -12,12 +12,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import server.Record;
+
 public class CreateWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField patientName, division, nurse, data;
+	private JTextField patientName, nurse, division, data;
 
-	public CreateWindow() {
+	private Monitor monitor;
+
+	public CreateWindow(Monitor monitor) {
+		this.monitor = monitor;
 
 		JPanel container = new JPanel();
 		container.setLayout(new GridLayout(4, 2));
@@ -27,13 +32,13 @@ public class CreateWindow extends JFrame {
 		patientName = new JTextField();
 		container.add(patientName);
 
-		container.add(new JLabel("Division:"));
-		division = new JTextField();
-		container.add(division);
-
 		container.add(new JLabel("Nurse:"));
 		nurse = new JTextField();
 		container.add(nurse);
+
+		container.add(new JLabel("Division:"));
+		division = new JTextField();
+		container.add(division);
 
 		container.add(new JLabel("Medical data:"));
 		data = new JTextField();
@@ -44,12 +49,19 @@ public class CreateWindow extends JFrame {
 
 		pack();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
-				- getSize().height / 2);
+		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
 
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+	}
 
+	private Record getRecord() {
+		String p = patientName.getText();
+		String n = nurse.getText();
+		String d = "";
+		String div = division.getText();
+		String dat = data.getText();
+		return new Record(-1, p, n, d, div, dat);
 	}
 
 	public class OKButton extends JButton implements ActionListener {
@@ -63,7 +75,7 @@ public class CreateWindow extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(patientName.getText());
+			monitor.createRecord(getRecord());
 		}
 
 	}

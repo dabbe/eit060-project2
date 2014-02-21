@@ -53,7 +53,7 @@ public class GUI extends JFrame {
 		JPanel buttons = new JPanel();
 		buttons.setLayout(new GridLayout(3, 1));
 
-		JButton create = new CreateButton();
+		JButton create = new CreateButton(monitor);
 		buttons.add(create);
 
 		JButton delete = new DeleteButton();

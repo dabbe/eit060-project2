@@ -65,7 +65,9 @@ public class ConnectionThread extends Thread {
 				case Request.GET_RECORDS:
 					out.println(gson.toJson(monitor.getRecords(CN, OU)));
 					break;
-				case Request.CREATE_NEW_PATIENT:
+				case Request.CREATE_RECORD:
+					Record record = gson.fromJson(request.getData(), Record.class);
+					monitor.createRecord(CN, OU, record);
 					break;
 				}
 				

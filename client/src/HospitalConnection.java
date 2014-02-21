@@ -13,6 +13,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 import resources.Request;
+import server.Record;
 
 import com.google.gson.Gson;
 
@@ -40,7 +41,7 @@ public class HospitalConnection {
 
 	public String getRecords() {
 		try {
-			Request request = new Request(Request.GET_RECORDS, null); 
+			Request request = new Request(Request.GET_RECORDS, null);
 			out.println(gson.toJson(request));
 			out.flush();
 			return in.readLine();
@@ -48,6 +49,12 @@ public class HospitalConnection {
 			e.printStackTrace();
 		}
 		return "";
+	}
+
+	public void createRecord(Record record) {
+		Request request = new Request(Request.CREATE_RECORD, gson.toJson(record));
+		out.println(gson.toJson(request));
+		out.flush();
 	}
 
 	public String getResponse(String operation) {
@@ -80,11 +87,11 @@ public class HospitalConnection {
 		TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
 		SSLContext ctx = SSLContext.getInstance("TLS");
 		ks.load(new FileInputStream(new File("bin/clientkeystore").getAbsolutePath()), password); // keystore
-																	// password
-																	// (storepass)
+		// password
+		// (storepass)
 		ts.load(new FileInputStream(new File("bin/clienttruststore").getAbsolutePath()), password); // truststore
-																	// password
-																	// (storepass);
+		// password
+		// (storepass);
 		kmf.init(ks, password); // user password (keypass)
 		tmf.init(ts); // keystore can be used as truststore here
 		ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);

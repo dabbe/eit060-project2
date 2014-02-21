@@ -29,11 +29,16 @@ public class Monitor {
 		return Arrays.asList(gson.fromJson(c.getRecords(), Record[].class));
 	}
 	
+	public synchronized void createRecord(Record record){
+		c.createRecord(record);
+		
+	}
+	
 	public static void main(String[] args){
 		new Monitor();
 	}
 
-	public void closeConnection() {
+	public synchronized void closeConnection() {
 		c.close();
 	}
 }
