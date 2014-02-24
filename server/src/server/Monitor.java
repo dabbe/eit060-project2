@@ -44,14 +44,16 @@ public class Monitor {
 		return null;
 	}
 
-	public void createRecord(String CN, String OU, Record record) {
+	public boolean createRecord(String CN, String OU, Record record) {
 		try {
 			if(OU.equals(HospitalMember.DOCTOR)) {
 				record.setDoctor(CN);
 				dbm.createRecord(record);
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 }

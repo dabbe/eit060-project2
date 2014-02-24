@@ -26,7 +26,7 @@ public class GUI extends JFrame {
 	public GUI(final Monitor monitor) {
 		this.monitor = monitor;
 
-		DefaultListModel<Record> model = new DefaultListModel<Record>();
+		DefaultListModel model = new DefaultListModel();
 		NameList list = new NameList(model, monitor);
 
 		JPanel container = new JPanel();

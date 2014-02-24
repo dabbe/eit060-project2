@@ -11,11 +11,11 @@ import javax.swing.event.ListSelectionListener;
 import server.Record;
 
 @SuppressWarnings("rawtypes")
-public class NameList extends JList<Record> implements ListSelectionListener {
+public class NameList extends JList implements ListSelectionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	private DefaultListModel<Record> model;
+	private DefaultListModel model;
 	private LinkedList<Observer> observers;
 	private Monitor monitor;
 
@@ -56,7 +56,7 @@ public class NameList extends JList<Record> implements ListSelectionListener {
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
 		if(getSelectedIndex() < 0) return;
-		updateAll(model.get(getSelectedIndex()));
+		updateAll((Record)model.get(getSelectedIndex()));
 	}
 
 }
