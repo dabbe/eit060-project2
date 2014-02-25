@@ -17,12 +17,12 @@ public class Monitor {
 
 	private Monitor(){
 		this.gson = new Gson();
-		new GUI(this);
 		try {
 			c = new HospitalConnection(host, port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		new GUI(this, c);
 	}
 	
 	public synchronized List<Record> getRecords(String name){

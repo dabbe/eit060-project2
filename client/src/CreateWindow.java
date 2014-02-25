@@ -40,7 +40,7 @@ public class CreateWindow extends JFrame {
 		division = new JTextField();
 		container.add(division);
 
-		container.add(new JLabel("Medical data:"));
+		container.add(new JLabel("Medical data:\t\t"));
 		data = new JTextField();
 		container.add(data);
 
