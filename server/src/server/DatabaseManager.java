@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import resources.HospitalMember;
+
 public class DatabaseManager {
 
 	// public static
@@ -30,7 +32,7 @@ public class DatabaseManager {
 	public void closeConnection() throws SQLException {
 		c.close();
 	}
-
+	
 	public void createTable() throws SQLException{
 		Statement sta = c.createStatement(); 
 	      int count = sta.executeUpdate(
@@ -56,17 +58,22 @@ public class DatabaseManager {
 		prepStmt.setString(5, record.getData());
 		prepStmt.executeUpdate();
 		prepStmt.close();
+		String logString = "Created new record for patient " + record.getPatient() + " with nurse " + record.getNurse(); 
+		log(HospitalMember.DOCTOR, record.getDoctor(), logString);
+		
 	}
 
-	public void deleteRecord(int id) throws SQLException {
+	public void deleteRecord(Record record) throws SQLException {
 		String query = "DELETE FROM records WHERE id=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
-		prepStmt.setInt(1, id);
+		prepStmt.setInt(1, record.getId());
 		prepStmt.executeUpdate();
 		prepStmt.close();
+		String logString = "Deleted records with ID " + record.getId();
+		log(HospitalMember.DOCTOR, record.getDoctor(), logString);
 	}
 	
-	public void updatePatientRecord(Record record) throws SQLException{
+	public void updatePatientRecord(Record record, String OU, String CN) throws SQLException{
 		String query = "UPDATE records SET patient=?,nurse=?,doctor=?,division=?,data=? WHERE id=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, record.getPatient());
@@ -78,6 +85,8 @@ public class DatabaseManager {
 		
 		prepStmt.executeUpdate();
 		prepStmt.close();
+		String logString = "Updated record for patient " + record.getPatient();
+		log(OU, CN, logString);
 	}
 
 	public ArrayList<Record> getRecordWithPatient(String patient) throws SQLException {
@@ -116,4 +125,16 @@ public class DatabaseManager {
 		return records;
 	}
 	
+	public void log(String title, String name, String action) throws SQLException
+	{
+		String query = "INSERT INTO log (title, name, time, action) VALUES(?,?,?,?)";
+		PreparedStatement prepStmt = c.prepareStatement(query);
+		prepStmt.setString(1, title);
+		prepStmt.setString(2, name);
+		prepStmt.setLong(3, System.currentTimeMillis());
+		prepStmt.setString(4, action);
+		prepStmt.executeUpdate();
+		prepStmt.close();
+		
+	}
 }
