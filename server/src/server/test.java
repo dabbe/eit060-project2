@@ -13,12 +13,7 @@ public class test {
 		Gson gson = new Gson();
 		try {
 			dbm = new DatabaseManager();
-			// dbm.createTable();
-
-//			 Record record = new Record(4, "Kalle", "Nörse", "Dåktor",
-//			 "Divishon", "Dataspela");
-//			 dbm.updatePatientRecord(record);
-
+			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

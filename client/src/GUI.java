@@ -56,7 +56,8 @@ public class GUI extends JFrame {
 		
 //		int temp = 3;
 		
-		String name = hc.getName();
+		String name = hc.getOU();
+		
 		
 		if (name.equals(HospitalMember.PATIENT)) {
 //		if (temp == 0) {

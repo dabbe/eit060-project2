@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import resources.HospitalMember;
+import resources.Identity;
+
 public class DatabaseManager {
 
 	// public static
@@ -30,7 +33,7 @@ public class DatabaseManager {
 	public void closeConnection() throws SQLException {
 		c.close();
 	}
-
+	
 	public void createTable() throws SQLException{
 		Statement sta = c.createStatement(); 
 	      int count = sta.executeUpdate(
@@ -46,7 +49,7 @@ public class DatabaseManager {
 
 	}
 
-	public void createRecord(Record record) throws SQLException {
+	public void createRecord(Record record, Identity identity) throws SQLException {
 		String query = "INSERT INTO records (patient, nurse, doctor, division, data) VALUES(?,?,?,?,?)";
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, record.getPatient());
@@ -56,17 +59,22 @@ public class DatabaseManager {
 		prepStmt.setString(5, record.getData());
 		prepStmt.executeUpdate();
 		prepStmt.close();
+		String logString = "Created new record for patient " + record.getPatient() + " with nurse " + record.getNurse(); 
+		log(identity, logString);
+		
 	}
 
-	public void deleteRecord(int id) throws SQLException {
+	public void deleteRecord(Record record, Identity identity) throws SQLException {
 		String query = "DELETE FROM records WHERE id=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
-		prepStmt.setInt(1, id);
+		prepStmt.setInt(1, record.getId());
 		prepStmt.executeUpdate();
 		prepStmt.close();
+		String logString = "Deleted record with ID " + record.getId();
+		log(identity, logString);
 	}
 	
-	public void updatePatientRecord(Record record) throws SQLException{
+	public void updatePatientRecord(Record record, Identity identity) throws SQLException{
 		String query = "UPDATE records SET patient=?,nurse=?,doctor=?,division=?,data=? WHERE id=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, record.getPatient());
@@ -78,20 +86,29 @@ public class DatabaseManager {
 		
 		prepStmt.executeUpdate();
 		prepStmt.close();
+		String logString = "Updated record for patient " + record.getPatient();
+		log(identity, logString);
 	}
 
-	public ArrayList<Record> getRecordWithPatient(String patient) throws SQLException {
+	public ArrayList<Record> getRecordWithPatient(Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE patient=?";
-		return getRecordFromName(query, patient);
+		
+		String logString = "Recieved all records associated with patient: " + identity.getCN();
+		log(identity, logString);
+		return getRecordFromName(query, identity.getCN());
 	}
 	
-	public ArrayList<Record> getRecordsWithNurse(String nurse) throws SQLException {
+	public ArrayList<Record> getRecordsWithNurse(Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE nurse=?";
-		return getRecordFromName(query, nurse);
+		String logString = "Recieved all records associated with nurse: " + identity.getCN();
+		log(identity, logString);
+		return getRecordFromName(query, identity.getCN());
 	}
-	public ArrayList<Record> getRecordsWithDoctor(String doctor) throws SQLException {
+	public ArrayList<Record> getRecordsWithDoctor(Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE doctor=?";
-		return getRecordFromName(query, doctor);
+		String logString = "Recieved all records associated with doctor: " + identity.getCN();
+		log(identity, logString);
+		return getRecordFromName(query, identity.getCN());
 	}
 	
 	private ArrayList<Record> getRecordFromName(String query, String name) throws SQLException {
@@ -116,4 +133,16 @@ public class DatabaseManager {
 		return records;
 	}
 	
+	private void log(Identity identity, String action) throws SQLException
+	{
+		String query = "INSERT INTO log (title, name, time, action) VALUES(?,?,?,?)";
+		PreparedStatement prepStmt = c.prepareStatement(query);
+		prepStmt.setString(1, identity.getOU());
+		prepStmt.setString(2, identity.getCN());
+		prepStmt.setLong(3, System.currentTimeMillis());
+		prepStmt.setString(4, action);
+		prepStmt.executeUpdate();
+		prepStmt.close();
+		
+	}
 }

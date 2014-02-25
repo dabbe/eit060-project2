@@ -12,6 +12,7 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
+import resources.Identity;
 import resources.Request;
 import server.Record;
 
@@ -23,6 +24,7 @@ public class HospitalConnection {
 	private PrintWriter out;
 	private Gson gson;
 	private String name;
+	private Identity identity;
 
 	public HospitalConnection(String host, int port) throws IOException {
 		SSLSocketFactory factory = null;
@@ -38,7 +40,9 @@ public class HospitalConnection {
 		System.out.println("Handshake complete");
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(socket.getOutputStream());
-		name = socket.getSession().getPeerCertificateChain()[0].getSubjectDN().getName();
+		System.out.println(socket.getSession().getLocalCertificates()[0].getType());
+		System.out.println(socket.getSession().getLocalCertificates()[0].getPublicKey());
+		splitDN(socket.getSession().getPeerCertificateChain()[0].getSubjectDN().getName());
 	}
 
 	public String getRecords() {
@@ -52,9 +56,23 @@ public class HospitalConnection {
 		}
 		return "";
 	}
+	
+	private void splitDN(String dn) {
+		identity = new Identity();
+		String[] params = dn.split(",");
+		for (String s : params) {
+			String temp = s.trim();
+			String[] splitParams = temp.split("=");
+			if (splitParams[0].equals(Identity.CN)) {
+				identity.setCN(splitParams[1]);
+			} else if (splitParams[0].equals(Identity.OU)) {
+				identity.setOU(splitParams[1]);
+			}
+		}
+	}
 
-	public String getName() {
-		return name;
+	public String getOU() {
+		return identity.getOU();
 	}
 	
 	public void createRecord(Record record) {
