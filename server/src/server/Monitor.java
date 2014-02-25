@@ -31,11 +31,11 @@ public class Monitor {
 	// TODO: Gov?
 	public synchronized ArrayList<Record> getRecords(Identity identity) {
 		try {
-			if(identity.getOU().equals(HospitalMember.DOCTOR)) {
+			if (identity.getOU().equals(HospitalMember.DOCTOR)) {
 				return dbm.getRecordsWithDoctor(identity);
-			} else if(identity.getOU().equals(HospitalMember.NURSE)) {
+			} else if (identity.getOU().equals(HospitalMember.NURSE)) {
 				return dbm.getRecordsWithNurse(identity);
-			} else if(identity.getOU().equals(HospitalMember.PATIENT)) {
+			} else if (identity.getOU().equals(HospitalMember.PATIENT)) {
 				return dbm.getRecordWithPatient(identity);
 			}
 		} catch (SQLException e) {
@@ -46,7 +46,7 @@ public class Monitor {
 
 	public boolean createRecord(Identity identity, Record record) {
 		try {
-			if(identity.getOU().equals(HospitalMember.DOCTOR)) {
+			if (identity.getOU().equals(HospitalMember.DOCTOR)) {
 				record.setDoctor(identity.getCN());
 				dbm.createRecord(record, identity);
 				return true;
@@ -55,5 +55,32 @@ public class Monitor {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public void updateRecord(Identity identity, Record record) {
+		String CN = identity.getCN();
+		String OU = identity.getOU();
+
+		try {
+			if ((OU.equals(HospitalMember.DOCTOR) && CN.equals(record.getDoctor())) || (OU.equals(HospitalMember.NURSE) && CN.equals(record.getNurse()))) {
+				dbm.updatePatientRecord(record, identity);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void deleteRecord(Identity identity, Record record) {
+		String CN = identity.getCN();
+		String OU = identity.getOU();
+
+		try {
+			if ((OU.equals(HospitalMember.DOCTOR) && CN.equals(record.getDoctor())) || (OU.equals(HospitalMember.NURSE) && CN.equals(record.getNurse()))
+					|| OU.equals(HospitalMember.GOV)) {
+				dbm.deleteRecord(record, identity);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -72,7 +72,11 @@ public class ConnectionThread extends Thread {
 					break;
 				case Request.UPDATE_RECORD:
 					Record updateRecord = gson.fromJson(request.getData(), Record.class);
-			//		monitor.updateRecord(record);
+					monitor.updateRecord(identity, updateRecord);
+					break;
+				case Request.DELETE_RECORD:
+					Record deleteRecord = gson.fromJson(request.getData(), Record.class);
+					monitor.deleteRecord(identity, deleteRecord);
 					break;
 				}
 				
