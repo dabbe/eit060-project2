@@ -69,7 +69,9 @@ public class ConnectionThread extends Thread {
 					Record record = gson.fromJson(request.getData(), Record.class);
 					out.println(monitor.createRecord(CN, OU, record));
 					break;
+				
 				}
+				
 				
 				/*
 				if (op.equals("GET")) {
