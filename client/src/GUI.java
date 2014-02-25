@@ -5,8 +5,6 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -15,16 +13,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-import server.Record;
+import resources.HospitalMember;
 
 public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	private Monitor monitor;
+	private HospitalConnection hc;
 
-	public GUI(final Monitor monitor) {
+	public GUI(final Monitor monitor, HospitalConnection hc) {
 		this.monitor = monitor;
+		this.hc = hc;
 
 		DefaultListModel model = new DefaultListModel();
 		NameList list = new NameList(model, monitor);
@@ -48,25 +48,53 @@ public class GUI extends JFrame {
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		leftBar.add(listScroller);
 
-		// TODO: switch (user) {
+		JPanel leftFooter = new JPanel();
+		leftFooter.setLayout(new BorderLayout());
+		JPanel rightFooter = new JPanel();
+		rightFooter.setLayout(new BorderLayout());
+		FileArea textArea = new FileArea();
+		
+//		int temp = 3;
+		
+		String name = hc.getName();
+		
+		if (name.equals(HospitalMember.PATIENT)) {
+//		if (temp == 0) {
+			
+			// Patient : no buttons, records not editable
+			textArea.setEditable(false);
+			search.setVisible(false);
+			leftFooter.setVisible(false);
+			rightFooter.setVisible(false);
+		
+		} else if (name.equals(HospitalMember.NURSE)) {
+//		} else if (temp == 1) {	
+			
+			// Nurse : Delete and Save
+			leftFooter.add(new DeleteButton());
+			rightFooter.add(new SaveButton());
+			
+		} else if (name.equals(HospitalMember.DOCTOR)) {
+//		} else if (temp == 2) {
+			
+			// Doctor : Create, Delete, Save
+			leftFooter.setLayout(new GridLayout(2, 1));
+			leftFooter.add(new CreateButton(monitor));
+			leftFooter.add(new DeleteButton());
+			rightFooter.add(new SaveButton());
+			
+		} else if (name.equals(HospitalMember.GOV)) {
+//		} else if (temp == 3) {
 
-		JPanel buttons = new JPanel();
-		buttons.setLayout(new GridLayout(3, 1));
+			// Government : Delete only
+			leftFooter.add(new DeleteButton());
+			textArea.setEditable(false);
+			
+		}
 
-		JButton create = new CreateButton(monitor);
-		buttons.add(create);
 
-		JButton delete = new DeleteButton();
-		buttons.add(delete);
+		leftBar.add(leftFooter, BorderLayout.SOUTH);
 
-		JButton edit = new EditButton();
-		buttons.add(edit);
-
-		leftBar.add(buttons, BorderLayout.SOUTH);
-
-		main.setLayout(new GridLayout(1, 2));
-
-		main.add(leftBar);
 
 		JPanel rightBar = new JPanel();
 		rightBar.setLayout(new BorderLayout());
@@ -74,16 +102,17 @@ public class GUI extends JFrame {
 		Header header = new Header();
 		rightBar.add(header, BorderLayout.NORTH);
 
-		FileArea textArea = new FileArea();
 		JScrollPane textScroller = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		textArea.setMargin(new Insets(2, 4, 2, 4));
 		rightBar.add(textScroller);
+		
+		rightBar.add(rightFooter, BorderLayout.SOUTH);
 
-		JButton save = new SaveButton();
-		rightBar.add(save, BorderLayout.SOUTH);
-
+		main.setLayout(new GridLayout(1, 2));
+		main.add(leftBar);
 		main.add(rightBar);
+
 		container.add(main);
 
 		add(container);

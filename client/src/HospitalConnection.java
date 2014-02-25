@@ -22,6 +22,7 @@ public class HospitalConnection {
 	private BufferedReader in;
 	private PrintWriter out;
 	private Gson gson;
+	private String name;
 
 	public HospitalConnection(String host, int port) throws IOException {
 		SSLSocketFactory factory = null;
@@ -37,6 +38,7 @@ public class HospitalConnection {
 		System.out.println("Handshake complete");
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(socket.getOutputStream());
+		name = socket.getSession().getPeerCertificateChain()[0].getSubjectDN().getName();
 	}
 
 	public String getRecords() {
@@ -51,6 +53,10 @@ public class HospitalConnection {
 		return "";
 	}
 
+	public String getName() {
+		return name;
+	}
+	
 	public void createRecord(Record record) {
 		Request request = new Request(Request.CREATE_RECORD, gson.toJson(record));
 		out.println(gson.toJson(request));
