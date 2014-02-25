@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import resources.HospitalMember;
+import resources.Identity;
 
 public class Monitor {
 
@@ -28,15 +29,14 @@ public class Monitor {
 	}
 
 	// TODO: Gov?
-	public synchronized ArrayList<Record> getRecords(String CN, String OU) {
-		System.out.println(CN + " " + OU);
+	public synchronized ArrayList<Record> getRecords(Identity identity) {
 		try {
-			if(OU.equals(HospitalMember.DOCTOR)) {
-				return dbm.getRecordsWithDoctor(CN);
-			} else if(OU.equals(HospitalMember.NURSE)) {
-				return dbm.getRecordsWithNurse(CN);
-			} else if(OU.equals(HospitalMember.PATIENT)) {
-				return dbm.getRecordWithPatient(CN);
+			if(identity.getOU().equals(HospitalMember.DOCTOR)) {
+				return dbm.getRecordsWithDoctor(identity);
+			} else if(identity.getOU().equals(HospitalMember.NURSE)) {
+				return dbm.getRecordsWithNurse(identity);
+			} else if(identity.getOU().equals(HospitalMember.PATIENT)) {
+				return dbm.getRecordWithPatient(identity);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -44,11 +44,11 @@ public class Monitor {
 		return null;
 	}
 
-	public boolean createRecord(String CN, String OU, Record record) {
+	public boolean createRecord(Identity identity, Record record) {
 		try {
-			if(OU.equals(HospitalMember.DOCTOR)) {
-				record.setDoctor(CN);
-				dbm.createRecord(record);
+			if(identity.getOU().equals(HospitalMember.DOCTOR)) {
+				record.setDoctor(identity.getCN());
+				dbm.createRecord(record, identity);
 				return true;
 			}
 		} catch (SQLException e) {

@@ -64,11 +64,11 @@ public class ConnectionThread extends Thread {
 				
 				switch(type){
 				case Request.GET_RECORDS:
-					out.println(gson.toJson(monitor.getRecords(identity.getCN(), identity.getOU())));
+					out.println(gson.toJson(monitor.getRecords(identity)));
 					break;
 				case Request.CREATE_RECORD:
 					Record createRecord = gson.fromJson(request.getData(), Record.class);
-					out.println(monitor.createRecord(identity.getCN(), identity.getOU(), createRecord));
+					out.println(monitor.createRecord(identity, createRecord));
 					break;
 				case Request.UPDATE_RECORD:
 					Record updateRecord = gson.fromJson(request.getData(), Record.class);

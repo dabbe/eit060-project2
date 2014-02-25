@@ -90,25 +90,25 @@ public class DatabaseManager {
 		log(identity, logString);
 	}
 
-	public ArrayList<Record> getRecordWithPatient(String patient, Identity identity) throws SQLException {
+	public ArrayList<Record> getRecordWithPatient(Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE patient=?";
 		
-		String logString = "Recieved all records associated with patient: " + patient;
+		String logString = "Recieved all records associated with patient: " + identity.getCN();
 		log(identity, logString);
-		return getRecordFromName(query, patient);
+		return getRecordFromName(query, identity.getCN());
 	}
 	
-	public ArrayList<Record> getRecordsWithNurse(String nurse, Identity identity) throws SQLException {
+	public ArrayList<Record> getRecordsWithNurse(Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE nurse=?";
-		String logString = "Recieved all records associated with nurse: " + nurse;
+		String logString = "Recieved all records associated with nurse: " + identity.getCN();
 		log(identity, logString);
-		return getRecordFromName(query, nurse);
+		return getRecordFromName(query, identity.getCN());
 	}
-	public ArrayList<Record> getRecordsWithDoctor(String doctor, Identity identity) throws SQLException {
+	public ArrayList<Record> getRecordsWithDoctor(Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE doctor=?";
-		String logString = "Recieved all records associated with doctor: " + doctor;
+		String logString = "Recieved all records associated with doctor: " + identity.getCN();
 		log(identity, logString);
-		return getRecordFromName(query, doctor);
+		return getRecordFromName(query, identity.getCN());
 	}
 	
 	private ArrayList<Record> getRecordFromName(String query, String name) throws SQLException {

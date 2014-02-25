@@ -14,7 +14,6 @@ public class test {
 		try {
 			dbm = new DatabaseManager();
 			
-			dbm.log("ANSIKTE", "MAMMA", "GGWP");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
