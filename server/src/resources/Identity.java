@@ -1,21 +1,24 @@
 package resources;
 
 public class Identity {
+	
+	public static final String CN = "CN";
+	public static final String OU = "OU";
 
-	private String CN;
-	private String OU;
+	private String mCN;
+	private String mOU;
 	
 	public String getCN() {
-		return CN;
+		return mCN;
 	}
 	public void setCN(String cN) {
-		CN = cN;
+		mCN = cN;
 	}
 	public String getOU() {
-		return OU;
+		return mOU;
 	}
 	public void setOU(String oU) {
-		OU = oU;
+		mOU = oU;
 	}
 	
 }

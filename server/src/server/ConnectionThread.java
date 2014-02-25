@@ -10,6 +10,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import javax.security.cert.X509Certificate;
 
+import resources.Identity;
 import resources.Request;
 
 import com.google.gson.Gson;
@@ -17,8 +18,7 @@ import com.google.gson.Gson;
 public class ConnectionThread extends Thread {
 	private SSLSocket socket;
 	private Monitor monitor;
-	private String CN;
-	private String OU;
+	private Identity identity;
 	
 	private Gson gson;
 
@@ -33,14 +33,15 @@ public class ConnectionThread extends Thread {
 	}
 
 	private void splitDN(String dn) {
+		identity = new Identity();
 		String[] params = dn.split(",");
 		for (String s : params) {
 			String temp = s.trim();
 			String[] splitParams = temp.split("=");
-			if (splitParams[0].equals("CN")) {
-				CN = splitParams[1];
-			} else if (splitParams[0].equals("OU")) {
-				OU = splitParams[1];
+			if (splitParams[0].equals(Identity.CN)) {
+				identity.setCN(splitParams[1]);
+			} else if (splitParams[0].equals(Identity.OU)) {
+				identity.setOU(splitParams[1]);
 			}
 		}
 	}
@@ -63,13 +64,16 @@ public class ConnectionThread extends Thread {
 				
 				switch(type){
 				case Request.GET_RECORDS:
-					out.println(gson.toJson(monitor.getRecords(CN, OU)));
+					out.println(gson.toJson(monitor.getRecords(identity.getCN(), identity.getOU())));
 					break;
 				case Request.CREATE_RECORD:
-					Record record = gson.fromJson(request.getData(), Record.class);
-					out.println(monitor.createRecord(CN, OU, record));
+					Record createRecord = gson.fromJson(request.getData(), Record.class);
+					out.println(monitor.createRecord(identity.getCN(), identity.getOU(), createRecord));
 					break;
-				
+				case Request.UPDATE_RECORD:
+					Record updateRecord = gson.fromJson(request.getData(), Record.class);
+			//		monitor.updateRecord(record);
+					break;
 				}
 				
 				
