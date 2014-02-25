@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import resources.HospitalMember;
+import resources.Identity;
 
 public class DatabaseManager {
 
@@ -48,7 +49,7 @@ public class DatabaseManager {
 
 	}
 
-	public void createRecord(Record record) throws SQLException {
+	public void createRecord(Record record, Identity identity) throws SQLException {
 		String query = "INSERT INTO records (patient, nurse, doctor, division, data) VALUES(?,?,?,?,?)";
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, record.getPatient());
@@ -59,21 +60,21 @@ public class DatabaseManager {
 		prepStmt.executeUpdate();
 		prepStmt.close();
 		String logString = "Created new record for patient " + record.getPatient() + " with nurse " + record.getNurse(); 
-		log(HospitalMember.DOCTOR, record.getDoctor(), logString);
+		log(identity, logString);
 		
 	}
 
-	public void deleteRecord(Record record) throws SQLException {
+	public void deleteRecord(Record record, Identity identity) throws SQLException {
 		String query = "DELETE FROM records WHERE id=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setInt(1, record.getId());
 		prepStmt.executeUpdate();
 		prepStmt.close();
-		String logString = "Deleted records with ID " + record.getId();
-		log(HospitalMember.DOCTOR, record.getDoctor(), logString);
+		String logString = "Deleted record with ID " + record.getId();
+		log(identity, logString);
 	}
 	
-	public void updatePatientRecord(Record record, String OU, String CN) throws SQLException{
+	public void updatePatientRecord(Record record, Identity identity) throws SQLException{
 		String query = "UPDATE records SET patient=?,nurse=?,doctor=?,division=?,data=? WHERE id=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, record.getPatient());
@@ -86,20 +87,27 @@ public class DatabaseManager {
 		prepStmt.executeUpdate();
 		prepStmt.close();
 		String logString = "Updated record for patient " + record.getPatient();
-		log(OU, CN, logString);
+		log(identity, logString);
 	}
 
-	public ArrayList<Record> getRecordWithPatient(String patient) throws SQLException {
+	public ArrayList<Record> getRecordWithPatient(String patient, Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE patient=?";
+		
+		String logString = "Recieved all records associated with patient: " + patient;
+		log(identity, logString);
 		return getRecordFromName(query, patient);
 	}
 	
-	public ArrayList<Record> getRecordsWithNurse(String nurse) throws SQLException {
+	public ArrayList<Record> getRecordsWithNurse(String nurse, Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE nurse=?";
+		String logString = "Recieved all records associated with nurse: " + nurse;
+		log(identity, logString);
 		return getRecordFromName(query, nurse);
 	}
-	public ArrayList<Record> getRecordsWithDoctor(String doctor) throws SQLException {
+	public ArrayList<Record> getRecordsWithDoctor(String doctor, Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE doctor=?";
+		String logString = "Recieved all records associated with doctor: " + doctor;
+		log(identity, logString);
 		return getRecordFromName(query, doctor);
 	}
 	
@@ -125,12 +133,12 @@ public class DatabaseManager {
 		return records;
 	}
 	
-	public void log(String title, String name, String action) throws SQLException
+	private void log(Identity identity, String action) throws SQLException
 	{
 		String query = "INSERT INTO log (title, name, time, action) VALUES(?,?,?,?)";
 		PreparedStatement prepStmt = c.prepareStatement(query);
-		prepStmt.setString(1, title);
-		prepStmt.setString(2, name);
+		prepStmt.setString(1, identity.getOU());
+		prepStmt.setString(2, identity.getCN());
 		prepStmt.setLong(3, System.currentTimeMillis());
 		prepStmt.setString(4, action);
 		prepStmt.executeUpdate();
