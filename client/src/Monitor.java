@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
@@ -23,12 +24,14 @@ public class Monitor {
 	private final int port = 9999;
 	private final String host = "localhost";
 	private Gson gson;
-	
+
 	private JPasswordField textField;
 	private JLabel label;
 	private JFrame frame;
-		
-	private ActionListener listener = new ActionListener(){
+
+	private ActionListener listener = new ActionListener() {
+
+		private int incorrect = 0;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -37,8 +40,16 @@ public class Monitor {
 				new GUI(Monitor.this, c);
 				frame.dispose();
 			} catch (IOException ex) {
-				label.setText("<HTML><CENTER>Welcome to DataJournal.<BR>Please enter your password:<BR><font color='red'>Incorrect password!</font></CENTER></HTML>");
+				incorrect++;
+				label.setText("<HTML><CENTER>Welcome to DataJournal.<BR>Please enter your password:<BR><font color='red'>Incorrect password! (" + incorrect
+						+ ")</font></CENTER></HTML>");
 				frame.pack();
+
+				if (incorrect >= 5) {
+					frame.dispose();
+					JOptionPane.showMessageDialog(null, "Entered incorrect password too many times!");
+					System.exit(1);
+				}
 			}
 		}
 	};
@@ -72,9 +83,7 @@ public class Monitor {
 		frame.setVisible(true);
 	}
 
-	
-
-	public synchronized List<Record> getRecordsOfPatient(String patientName){
+	public synchronized List<Record> getRecordsOfPatient(String patientName) {
 		return Arrays.asList(gson.fromJson(c.getRecordsOfPatient(patientName), Record[].class));
 	}
 
