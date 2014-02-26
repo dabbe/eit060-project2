@@ -29,10 +29,10 @@ public class SaveButton extends JButton implements ActionListener {
 
 		try {
 			if (Boolean.parseBoolean(monitor.updateRecord(record))) {
-				JOptionPane.showConfirmDialog(null, "Patient medical data updated.");
+				JOptionPane.showMessageDialog(null, "Patient medical data updated.");
 				list.refreshList();
 			} else {
-				JOptionPane.showConfirmDialog(null, "There was an error.");
+				JOptionPane.showMessageDialog(null, "There was an error.");
 			}
 		} catch (Exception e1) {
 			e1.printStackTrace();
