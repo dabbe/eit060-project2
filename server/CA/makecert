@@ -18,7 +18,7 @@ keytool -import -file ca.crt -alias ca -keystore clientkeystore -storepass passw
 
 keytool -import -file signed.crt -alias client -keystore clientkeystore -storepass password -noprompt
 
-keytool -import -file server.crt -alias ca -keystore clienttruststore -storepass password -noprompt
+keytool -import -file ca.crt -alias ca -keystore clienttruststore -storepass password -noprompt
 
 rm req.csr
 rm signed.crt
