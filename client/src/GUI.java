@@ -24,66 +24,56 @@ public class GUI extends JFrame {
 		DefaultListModel model = new DefaultListModel();
 		RecordList list = new RecordList(model, monitor);
 
-		JPanel container = new JPanel();
+		JPanel container = new JPanel(new BorderLayout());
 		container.setPreferredSize(new Dimension(600, 600));
 		container.setBorder(new EmptyBorder(10, 10, 10, 10));
-		container.setLayout(new BorderLayout());
 
 		SearchField search = new SearchField(monitor, list);
 		container.add(search, BorderLayout.NORTH);
 
-		JPanel leftBar = new JPanel();
-		leftBar.setLayout(new BorderLayout());
+		JPanel leftBar = new JPanel(new BorderLayout());
 		leftBar.setBorder(new EmptyBorder(0, 0, 0, 10));
 
-		JPanel rightBar = new JPanel();
-		rightBar.setLayout(new BorderLayout());
+		JPanel rightBar = new JPanel(new BorderLayout());
 
 		JScrollPane listScroller = new JScrollPane(list,
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		leftBar.add(listScroller);
 
-		JPanel leftFooter = new JPanel();
-		leftFooter.setLayout(new BorderLayout());
-		JPanel rightFooter = new JPanel();
-		rightFooter.setLayout(new BorderLayout());
+		JPanel leftFooter = new JPanel(new BorderLayout());
+		JPanel rightFooter = new JPanel(new BorderLayout());
 		FileArea textArea = new FileArea();
 		Header header = new Header();
 		rightBar.add(header, BorderLayout.NORTH);
 
-		// int temp = 3;
 		String ou = hc.getOU();
 
 		if (ou.equals(HospitalMember.PATIENT)) {
-			// if (temp == 0) {
-			// Patient : no buttons, records not editable
+			
+			// Patient : Read only
 			textArea.setEditable(false);
 			search.setVisible(false);
 			leftFooter.setVisible(false);
 			rightFooter.setVisible(false);
 
 		} else if (ou.equals(HospitalMember.NURSE)) {
-			// } else if (temp == 1) {
 
-			// Nurse : Delete and Save
+			// Nurse : Search, Save
 			leftFooter.setVisible(false);
 			rightFooter.add(new SaveButton());
 
 		} else if (ou.equals(HospitalMember.DOCTOR)) {
-			// } else if (temp == 2) {
 
-			// Doctor : Create, Delete, Save
+			// Doctor : Search, Create, Save
 			leftFooter.add(new CreateButton(monitor));
 			rightFooter.add(new SaveButton());
 
 		} else if (ou.equals(HospitalMember.GOV)) {
-			// } else if (temp == 3) {
 
-			// Government : Delete only
+			// Government : Search, Delete
 			leftFooter.add(new DeleteButton());
 			textArea.setEditable(false);
-
 		}
 
 		leftBar.add(leftFooter, BorderLayout.SOUTH);
