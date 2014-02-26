@@ -17,15 +17,12 @@ import resources.Record;
 public class CreateWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField patientName, nurse, division, data;
+	private JTextField patientName, nurse, data;
 
 	private Monitor monitor;
-	
-	private JFrame frame;
 
 	public CreateWindow(Monitor monitor) {
 		this.monitor = monitor;
-		this.frame = frame;
 
 		JPanel container = new JPanel();
 		container.setLayout(new GridLayout(3, 2));
@@ -48,7 +45,8 @@ public class CreateWindow extends JFrame {
 
 		pack();
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
+		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
+				- getSize().height / 2);
 
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -75,11 +73,11 @@ public class CreateWindow extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				if(Boolean.parseBoolean(monitor.createRecord(getRecord()))){
+				if (Boolean.parseBoolean(monitor.createRecord(getRecord()))) {
 					CreateWindow.this.dispose();
-					JOptionPane.showMessageDialog(null, "Record successfully created!");
-					
-				} else{
+					JOptionPane.showMessageDialog(null,
+							"Record successfully created!");
+				} else {
 					JOptionPane.showMessageDialog(null, "There was an error!");
 				}
 			} catch (Exception e1) {
