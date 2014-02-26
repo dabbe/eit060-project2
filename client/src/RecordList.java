@@ -36,7 +36,7 @@ public class RecordList extends JList implements ListSelectionListener {
 	}
 
 	public void updateList(String name) {
-		List<Record> records = monitor.getRecords(name);
+		List<Record> records = monitor.getRecordsOfPatient(name);
 
 		model.clear();
 		for (Record record : records) {

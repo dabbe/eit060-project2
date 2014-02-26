@@ -89,6 +89,14 @@ public class DatabaseManager {
 		String logString = "Updated record for patient " + record.getPatient();
 		log(identity, logString);
 	}
+	
+	public ArrayList<Record> getRecordsOfPatient(Identity identity, String patientName) throws SQLException {
+		String query = "SELECT * FROM records WHERE patient=?";
+		
+		String logString = "Recieved all records associated with patient: " + patientName;
+		log(identity, logString);
+		return getRecordFromName(query, patientName);
+	}
 
 	public ArrayList<Record> getRecordWithPatient(Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE patient=?";

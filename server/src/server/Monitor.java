@@ -27,6 +27,16 @@ public class Monitor {
 			e.printStackTrace();
 		}
 	}
+	
+	public synchronized ArrayList<Record> getRecordsOfPatient(Identity identity, String patientName) {
+		try {
+			//access control här
+			return dbm.getRecordsOfPatient(identity, patientName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	// TODO: Gov?
 	public synchronized ArrayList<Record> getRecords(Identity identity) {
@@ -56,7 +66,7 @@ public class Monitor {
 		}
 		return false;
 	}
-
+	
 	public void updateRecord(Identity identity, Record record) {
 		String CN = identity.getCN();
 		String OU = identity.getOU();
@@ -71,12 +81,10 @@ public class Monitor {
 	}
 
 	public void deleteRecord(Identity identity, Record record) {
-		String CN = identity.getCN();
 		String OU = identity.getOU();
-
+		
 		try {
-			if ((OU.equals(HospitalMember.DOCTOR) && CN.equals(record.getDoctor())) || (OU.equals(HospitalMember.NURSE) && CN.equals(record.getNurse()))
-					|| OU.equals(HospitalMember.GOV)) {
+			if (OU.equals(HospitalMember.GOV)) {
 				dbm.deleteRecord(record, identity);
 			}
 		} catch (SQLException e) {
