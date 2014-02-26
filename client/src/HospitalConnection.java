@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.security.KeyStore;
+import java.security.cert.CertificateEncodingException;
 
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
@@ -40,9 +41,8 @@ public class HospitalConnection {
 		System.out.println("Handshake complete");
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(socket.getOutputStream());
-		System.out.println(socket.getSession().getLocalCertificates()[0].getType());
-		System.out.println(socket.getSession().getLocalCertificates()[0].getPublicKey());
-		splitDN(socket.getSession().getPeerCertificateChain()[0].getSubjectDN().getName());
+		
+		splitDN(socket.getSession().getLocalPrincipal().getName());
 	}
 
 	public String getRecords() {

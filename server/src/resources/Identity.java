@@ -21,4 +21,8 @@ public class Identity {
 		mOU = oU;
 	}
 	
+	public String toString(){
+		return "CN: " + mCN + "\nOU: " + mOU + "\n";
+	}
+	
 }

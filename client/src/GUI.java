@@ -57,11 +57,11 @@ public class GUI extends JFrame {
 //		int temp = 3;
 		
 		String name = hc.getOU();
+		System.out.println(name);
 		
 		
 		if (name.equals(HospitalMember.PATIENT)) {
 //		if (temp == 0) {
-			
 			// Patient : no buttons, records not editable
 			textArea.setEditable(false);
 			search.setVisible(false);
