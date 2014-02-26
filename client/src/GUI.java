@@ -57,7 +57,6 @@ public class GUI extends JFrame {
 
 		if (ou.equals(HospitalMember.PATIENT)) {
 			// if (temp == 0) {
-
 			// Patient : no buttons, records not editable
 			textArea.setEditable(false);
 			search.setVisible(false);
