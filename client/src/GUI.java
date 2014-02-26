@@ -39,9 +39,7 @@ public class GUI extends JFrame {
 		JPanel rightBar = new JPanel();
 		rightBar.setLayout(new BorderLayout());
 
-		JScrollPane listScroller = new JScrollPane(list,
-				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane listScroller = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		leftBar.add(listScroller);
 
 		JPanel leftFooter = new JPanel();
@@ -49,14 +47,14 @@ public class GUI extends JFrame {
 		JPanel rightFooter = new JPanel();
 		rightFooter.setLayout(new BorderLayout());
 		FileArea textArea = new FileArea();
+
 		Header header = new Header();
 		rightBar.add(header, BorderLayout.NORTH);
 
-		// int temp = 3;
 		String ou = hc.getOU();
 
 		if (ou.equals(HospitalMember.PATIENT)) {
-			// if (temp == 0) {
+
 			// Patient : no buttons, records not editable
 			textArea.setEditable(false);
 			search.setVisible(false);
@@ -64,21 +62,18 @@ public class GUI extends JFrame {
 			rightFooter.setVisible(false);
 
 		} else if (ou.equals(HospitalMember.NURSE)) {
-			// } else if (temp == 1) {
 
 			// Nurse : Delete and Save
 			leftFooter.setVisible(false);
 			rightFooter.add(new SaveButton());
 
 		} else if (ou.equals(HospitalMember.DOCTOR)) {
-			// } else if (temp == 2) {
 
 			// Doctor : Create, Delete, Save
 			leftFooter.add(new CreateButton(monitor));
 			rightFooter.add(new SaveButton());
 
 		} else if (ou.equals(HospitalMember.GOV)) {
-			// } else if (temp == 3) {
 
 			// Government : Delete only
 			leftFooter.add(new DeleteButton());
@@ -88,9 +83,9 @@ public class GUI extends JFrame {
 
 		leftBar.add(leftFooter, BorderLayout.SOUTH);
 
-		JScrollPane textScroller = new JScrollPane(textArea,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane textScroller = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+
+		JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		textArea.setMargin(new Insets(2, 4, 2, 4));
 		rightBar.add(textScroller);
 
@@ -111,8 +106,7 @@ public class GUI extends JFrame {
 		list.addObserver(textArea);
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2
-				- getSize().height / 2);
+		setLocation(dim.width / 2 - getSize().width / 2, dim.height / 2 - getSize().height / 2);
 
 		setVisible(true);
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
