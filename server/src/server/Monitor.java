@@ -34,9 +34,9 @@ public class Monitor {
 		String OU = identity.getOU();
 		
 		try {
-			//A patient is allowed to read his/her own list of records
-			if (OU.equals(HospitalMember.PATIENT) && CN.equals(patientName))
-			{
+			if (OU.equals(HospitalMember.GOV)) {
+				return dbm.getRecordsOfPatient(identity, patientName);
+			} else if (OU.equals(HospitalMember.PATIENT) && CN.equals(patientName)) {
 				return dbm.getRecordsOfPatient(identity, patientName);
 			} else if (OU.equals(HospitalMember.NURSE) || OU.equals(HospitalMember.DOCTOR)) {
 				ArrayList<Record> records = dbm.getRecordsOfPatient(identity, patientName);
