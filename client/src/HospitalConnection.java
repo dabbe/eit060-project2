@@ -70,6 +70,10 @@ public class HospitalConnection {
 			}
 		}
 	}
+	
+	public String getCN(){
+		return identity.getCN();
+	}
 
 	public String getOU() {
 		return identity.getOU();

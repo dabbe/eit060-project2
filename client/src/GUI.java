@@ -61,7 +61,7 @@ public class GUI extends JFrame {
 		
 		
 		if (name.equals(HospitalMember.PATIENT)) {
-//		if (temp == 0) {
+
 			// Patient : no buttons, records not editable
 			textArea.setEditable(false);
 			search.setVisible(false);
@@ -69,14 +69,12 @@ public class GUI extends JFrame {
 			rightFooter.setVisible(false);
 		
 		} else if (name.equals(HospitalMember.NURSE)) {
-//		} else if (temp == 1) {	
 			
 			// Nurse : Delete and Save
 			leftFooter.add(new DeleteButton());
 			rightFooter.add(new SaveButton());
 			
 		} else if (name.equals(HospitalMember.DOCTOR)) {
-//		} else if (temp == 2) {
 			
 			// Doctor : Create, Delete, Save
 			leftFooter.setLayout(new GridLayout(2, 1));
@@ -85,17 +83,14 @@ public class GUI extends JFrame {
 			rightFooter.add(new SaveButton());
 			
 		} else if (name.equals(HospitalMember.GOV)) {
-//		} else if (temp == 3) {
 
 			// Government : Delete only
 			leftFooter.add(new DeleteButton());
 			textArea.setEditable(false);
-			
 		}
 
 
 		leftBar.add(leftFooter, BorderLayout.SOUTH);
-
 
 		JPanel rightBar = new JPanel();
 		rightBar.setLayout(new BorderLayout());

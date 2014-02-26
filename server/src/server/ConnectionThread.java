@@ -56,8 +56,6 @@ public class ConnectionThread extends Thread {
 			String clientMsg = null;
 			while ((clientMsg = in.readLine()) != null) {
 				Scanner scan = new Scanner(clientMsg);
-//				String op = scan.next();
-//				System.out.println("Received " + op);
 				
 				Request request = gson.fromJson(clientMsg, Request.class);
 				int type = request.getType();
@@ -79,23 +77,7 @@ public class ConnectionThread extends Thread {
 					monitor.deleteRecord(identity, deleteRecord);
 					break;
 				}
-				
-				
-				/*
-				if (op.equals("GET")) {
-					out.println(gson.toJson(monitor.getRecords(CN, OU)));
-				} else if (op.equals("PUT")) {
-					out.println("TUP");
-				} else if (op.equals("ADD")) {
-//					monitor.createPatient();
-					out.println("DDA");
-				} else if (op.equals("DELETE")) {
-//					monitor.delete();
-					out.println("ETELED");
-				} else {
-					System.out.println("Unrecognized operation " + op);
-					out.println("IDUNNOLOL");
-				}*/
+			
 				scan.close();
 				out.flush();
 			}
