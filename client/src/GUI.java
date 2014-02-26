@@ -44,13 +44,14 @@ public class GUI extends JFrame {
 		JPanel leftFooter = new JPanel(new BorderLayout());
 		JPanel rightFooter = new JPanel(new BorderLayout());
 		FileArea textArea = new FileArea();
+
 		Header header = new Header();
 		rightBar.add(header, BorderLayout.NORTH);
 
 		String ou = hc.getOU();
 
 		if (ou.equals(HospitalMember.PATIENT)) {
-			
+
 			// Patient : Read only
 			textArea.setEditable(false);
 			search.setVisible(false);
@@ -80,6 +81,7 @@ public class GUI extends JFrame {
 
 		JScrollPane textScroller = new JScrollPane(textArea,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		textArea.setMargin(new Insets(2, 4, 2, 4));
 		rightBar.add(textScroller);
