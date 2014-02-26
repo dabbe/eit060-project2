@@ -71,7 +71,7 @@ public class GUI extends JFrame {
 		} else if (ou.equals(HospitalMember.GOV)) {
 
 			// Government : Search, Delete
-			leftFooter.add(new DeleteButton());
+			leftFooter.add(new DeleteButton(monitor, list, textArea, header));
 			textArea.setEditable(false);
 		}
 

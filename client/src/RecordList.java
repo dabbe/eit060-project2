@@ -30,8 +30,10 @@ public class RecordList extends JList implements ListSelectionListener {
 		setLayoutOrientation(JList.VERTICAL);
 		setVisibleRowCount(-1);
 	}
-
+	
 	public Record getCurrentSelected() {
+		if (getSelectedIndex() < 0)
+			return null;
 		return (Record) model.get(getSelectedIndex());
 	}
 
@@ -39,7 +41,11 @@ public class RecordList extends JList implements ListSelectionListener {
 		observers.add(o);
 	}
 	
-	public void refreshList(){
+	public void remove(int index){
+		model.remove(index);
+	}
+
+	public void refreshList() {
 		setModel(model);
 	}
 

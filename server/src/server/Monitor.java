@@ -99,15 +99,17 @@ public class Monitor {
 		return false;
 	}
 
-	public void deleteRecord(Identity identity, Record record) {
+	public boolean deleteRecord(Identity identity, Record record) {
 		String OU = identity.getOU();
 		
 		try {
 			if (OU.equals(HospitalMember.GOV)) {
 				dbm.deleteRecord(record, identity);
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 }

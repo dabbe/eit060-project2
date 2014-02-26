@@ -75,7 +75,7 @@ public class ConnectionThread extends Thread {
 					break;
 				case Request.DELETE_RECORD:
 					Record deleteRecord = gson.fromJson(request.getData(), Record.class);
-					monitor.deleteRecord(identity, deleteRecord);
+					out.println(monitor.deleteRecord(identity, deleteRecord));
 					break;
 				}
 			

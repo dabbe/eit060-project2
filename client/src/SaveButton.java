@@ -25,6 +25,7 @@ public class SaveButton extends JButton implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Record record = list.getCurrentSelected();
+		if(record == null) return;
 		record.setData(textArea.getText());
 
 		try {
