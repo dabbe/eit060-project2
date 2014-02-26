@@ -25,8 +25,8 @@ public class Monitor {
 		new GUI(this, c);
 	}
 	
-	public synchronized List<Record> getRecords(String name){
-		return Arrays.asList(gson.fromJson(c.getRecords(), Record[].class));
+	public synchronized List<Record> getRecordsOfPatient(String patientName){
+		return Arrays.asList(gson.fromJson(c.getRecordsOfPatient(patientName), Record[].class));
 	}
 	
 	public synchronized void createRecord(Record record){

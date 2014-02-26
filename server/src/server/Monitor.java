@@ -27,6 +27,16 @@ public class Monitor {
 			e.printStackTrace();
 		}
 	}
+	
+	public synchronized ArrayList<Record> getRecordsOfPatient(Identity identity, String patientName) {
+		try {
+			//access control här
+			return dbm.getRecordsOfPatient(identity, patientName);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	// TODO: Gov?
 	public synchronized ArrayList<Record> getRecords(Identity identity) {

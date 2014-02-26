@@ -45,9 +45,9 @@ public class HospitalConnection {
 		splitDN(socket.getSession().getLocalPrincipal().getName());
 	}
 
-	public String getRecords() {
+	public String getRecordsOfPatient(String patientName) {
 		try {
-			Request request = new Request(Request.GET_RECORDS, null);
+			Request request = new Request(Request.GET_RECORDS, patientName);
 			out.println(gson.toJson(request));
 			out.flush();
 			return in.readLine();
