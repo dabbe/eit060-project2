@@ -55,8 +55,8 @@ public class Monitor {
 		frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
 	}
 	
-	public synchronized List<Record> getRecords(String name){
-		return Arrays.asList(gson.fromJson(c.getRecords(), Record[].class));
+	public synchronized List<Record> getRecordsOfPatient(String patientName){
+		return Arrays.asList(gson.fromJson(c.getRecordsOfPatient(patientName), Record[].class));
 	}
 	
 	public synchronized void createRecord(Record record){
