@@ -4,10 +4,10 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -20,9 +20,12 @@ public class CreateWindow extends JFrame {
 	private JTextField patientName, nurse, division, data;
 
 	private Monitor monitor;
+	
+	private JFrame frame;
 
 	public CreateWindow(Monitor monitor) {
 		this.monitor = monitor;
+		this.frame = frame;
 
 		JPanel container = new JPanel();
 		container.setLayout(new GridLayout(3, 2));
@@ -71,7 +74,17 @@ public class CreateWindow extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			monitor.createRecord(getRecord());
+			try {
+				if(Boolean.parseBoolean(monitor.createRecord(getRecord()))){
+					CreateWindow.this.dispose();
+					JOptionPane.showMessageDialog(null, "Record successfully created!");
+					
+				} else{
+					JOptionPane.showMessageDialog(null, "There was an error!");
+				}
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
 		}
 
 	}

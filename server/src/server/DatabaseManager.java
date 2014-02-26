@@ -1,7 +1,6 @@
 package server;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import resources.HospitalMember;
 import resources.Identity;
 import resources.Record;
 
@@ -56,7 +54,7 @@ public class DatabaseManager {
 		prepStmt.setString(1, record.getPatient());
 		prepStmt.setString(2, record.getNurse());
 		prepStmt.setString(3, record.getDoctor());
-		prepStmt.setString(4, record.getDivision());
+		prepStmt.setString(4, getDivisionFromName(identity.getCN()));
 		prepStmt.setString(5, record.getData());
 		prepStmt.executeUpdate();
 		prepStmt.close();
@@ -120,7 +118,7 @@ public class DatabaseManager {
 		return getRecordFromName(query, identity.getCN());
 	}
 	public String getDivisionFromName(String name) throws SQLException {
-		String query = "SELECT * FROM division WHERE name=?";
+		String query = "SELECT * FROM divisions WHERE name=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, name);
 		ResultSet rs = prepStmt.executeQuery();

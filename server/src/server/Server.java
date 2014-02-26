@@ -1,14 +1,9 @@
 package server;
 
 import java.io.*;
-import java.net.*;
 import java.security.KeyStore;
 
-import javax.net.*;
 import javax.net.ssl.*;
-import javax.security.cert.X509Certificate;
-
-import com.google.gson.Gson;
 
 public class Server {
 	

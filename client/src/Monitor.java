@@ -43,6 +43,7 @@ public class Monitor {
 				incorrect++;
 				label.setText("<HTML><CENTER>Welcome to DataJournal.<BR>Please enter your password:<BR><font color='red'>Incorrect password! (" + incorrect
 						+ ")</font></CENTER></HTML>");
+				textField.setText("");
 				frame.pack();
 
 				if (incorrect >= 5) {
@@ -87,8 +88,8 @@ public class Monitor {
 		return Arrays.asList(gson.fromJson(c.getRecordsOfPatient(patientName), Record[].class));
 	}
 
-	public synchronized void createRecord(Record record) {
-		c.createRecord(record);
+	public synchronized String createRecord(Record record) throws IOException {
+		return c.createRecord(record);
 	}
 
 	public static void main(String[] args) {
@@ -97,5 +98,9 @@ public class Monitor {
 
 	public synchronized void closeConnection() {
 		c.close();
+	}
+
+	public String updateRecord(Record record) throws IOException {
+		return c.updateRecord(record);
 	}
 }
