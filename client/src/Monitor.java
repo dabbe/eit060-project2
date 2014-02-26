@@ -103,4 +103,9 @@ public class Monitor {
 	public String updateRecord(Record record) throws IOException {
 		return c.updateRecord(record);
 	}
+	
+	public String deleteRecord(Record record) throws IOException {
+		return c.deleteRecord(record);
+	}
+
 }

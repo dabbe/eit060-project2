@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.security.KeyStore;
+
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
@@ -90,17 +91,13 @@ public class HospitalConnection {
 		out.flush();
 		return in.readLine();
 	}
+	
 
-	public String getResponse(String operation) {
-		System.out.println("Sending " + operation);
-		try {
-			out.println(operation);
-			out.flush();
-			return in.readLine();
-		} catch (IOException e) {
-			System.out.println("Error when getting response from server " + e.getMessage());
-			return null;
-		}
+	public String deleteRecord(Record record) throws IOException {
+		Request request = new Request(Request.DELETE_RECORD, gson.toJson(record));
+		out.println(gson.toJson(request));
+		out.flush();
+		return in.readLine();
 	}
 
 	public void close() {
@@ -130,5 +127,6 @@ public class HospitalConnection {
 		ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 		return ctx.getSocketFactory();
 	}
+
 
 }

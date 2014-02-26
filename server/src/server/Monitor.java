@@ -39,22 +39,15 @@ public class Monitor {
 			} else if (OU.equals(HospitalMember.PATIENT) && CN.equals(patientName)) {
 				return dbm.getRecordsOfPatient(identity, patientName);
 			} else if (OU.equals(HospitalMember.NURSE) || OU.equals(HospitalMember.DOCTOR)) {
-				ArrayList<Record> records = dbm.getRecordsOfPatient(identity, patientName);
-				ArrayList<Record> ret = new ArrayList<Record>();
-				for (Record r : records) {
-					if (r.getDivision().equals(dbm.getDivisionFromName(CN))) {
-						ret.add(r);
-					}
-				}
-				return ret;
+				String division = dbm.getDivisionFromName(CN);
+				return dbm.getRecordsOfPatient(identity, patientName, division);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-	// TODO: Gov?
+	
 	public synchronized ArrayList<Record> getRecords(Identity identity) {
 		try {
 			if (identity.getOU().equals(HospitalMember.DOCTOR)) {
@@ -99,15 +92,17 @@ public class Monitor {
 		return false;
 	}
 
-	public void deleteRecord(Identity identity, Record record) {
+	public boolean deleteRecord(Identity identity, Record record) {
 		String OU = identity.getOU();
 		
 		try {
 			if (OU.equals(HospitalMember.GOV)) {
 				dbm.deleteRecord(record, identity);
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 }

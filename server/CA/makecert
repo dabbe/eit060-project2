@@ -20,8 +20,7 @@ keytool -import -file ca.crt -alias ca -keystore "$temp"/clientkeystore -storepa
 
 keytool -import -file signed.crt -alias client -keystore "$temp"/clientkeystore -storepass password -noprompt
 
-keytool -import -file server.crt -alias ca -keystore "$temp"/clienttruststore -storepass password -noprompt
-
+keytool -import -file ca.crt -alias ca -keystore "$temp"/clienttruststore -storepass password -noprompt
 
 
 
