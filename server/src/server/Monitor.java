@@ -29,9 +29,24 @@ public class Monitor {
 	}
 	
 	public synchronized ArrayList<Record> getRecordsOfPatient(Identity identity, String patientName) {
+		String CN = identity.getCN();
+		String OU = identity.getOU();
+		
 		try {
-			//access control här
-			return dbm.getRecordsOfPatient(identity, patientName);
+			//A patient is allowed to read his/her own list of records
+			if (OU.equals(HospitalMember.PATIENT) && CN.equals(patientName))
+			{
+				return dbm.getRecordsOfPatient(identity, patientName);
+			} else if (OU.equals(HospitalMember.NURSE) || OU.equals(HospitalMember.DOCTOR)) {
+				ArrayList<Record> records = dbm.getRecordsOfPatient(identity, patientName);
+				ArrayList<Record> ret = new ArrayList<Record>();
+				for (Record r : records) {
+					if (r.getDivision().equals(dbm.getDivisionFromName(CN))) {
+						ret.add(r);
+					}
+				}
+				return ret;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

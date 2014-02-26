@@ -63,7 +63,7 @@ public class DatabaseManager {
 		log(identity, logString);
 		
 	}
-
+	
 	public void deleteRecord(Record record, Identity identity) throws SQLException {
 		String query = "DELETE FROM records WHERE id=?";
 		PreparedStatement prepStmt = c.prepareStatement(query);
@@ -118,6 +118,18 @@ public class DatabaseManager {
 		log(identity, logString);
 		return getRecordFromName(query, identity.getCN());
 	}
+	public String getDivisionFromName(String name) throws SQLException {
+		String query = "SELECT * FROM division WHERE name=?";
+		PreparedStatement prepStmt = c.prepareStatement(query);
+		prepStmt.setString(1, name);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		String div = "";
+		if (rs.next()) {
+			div = rs.getString(2);
+		}
+		return div;
+	}
 	
 	private ArrayList<Record> getRecordFromName(String query, String name) throws SQLException {
 		PreparedStatement prepStmt = c.prepareStatement(query);
@@ -153,4 +165,5 @@ public class DatabaseManager {
 		prepStmt.close();
 		
 	}
+	
 }
