@@ -27,10 +27,10 @@ public class HospitalConnection {
 	private String name;
 	private Identity identity;
 
-	public HospitalConnection(String host, int port) throws IOException {
+	public HospitalConnection(String host, int port, char[] pw) throws IOException {
 		SSLSocketFactory factory = null;
 		try {
-			factory = getSocketFactory();
+			factory = getSocketFactory(pw);
 		} catch (Exception e) {
 			throw new IOException(e.getMessage());
 		}
@@ -107,20 +107,19 @@ public class HospitalConnection {
 		}
 	}
 
-	private static SSLSocketFactory getSocketFactory() throws Exception {
-		char[] password = "password".toCharArray();
+	private static SSLSocketFactory getSocketFactory(char[] pw) throws Exception {
 		KeyStore ks = KeyStore.getInstance("JKS");
 		KeyStore ts = KeyStore.getInstance("JKS");
 		KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 		TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
 		SSLContext ctx = SSLContext.getInstance("TLS");
-		ks.load(new FileInputStream(new File("bin/clientkeystore").getAbsolutePath()), password); // keystore
+		ks.load(new FileInputStream(new File("bin/clientkeystore").getAbsolutePath()), pw); // keystore
 		// password
 		// (storepass)
-		ts.load(new FileInputStream(new File("bin/clienttruststore").getAbsolutePath()), password); // truststore
+		ts.load(new FileInputStream(new File("bin/clienttruststore").getAbsolutePath()), pw); // truststore
 		// password
 		// (storepass);
-		kmf.init(ks, password); // user password (keypass)
+		kmf.init(ks, pw); // user password (keypass)
 		tmf.init(ts); // keystore can be used as truststore here
 		ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 		return ctx.getSocketFactory();
