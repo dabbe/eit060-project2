@@ -97,6 +97,14 @@ public class DatabaseManager {
 		log(identity, logString);
 		return getRecordFromName(query, patientName);
 	}
+	
+	public ArrayList<Record> getRecordsOfPatient(Identity identity, String patientName, String division) throws SQLException {
+		String query = "SELECT * FROM records WHERE patient=?,division=?";
+		
+		String logString = "Recieved all records associated with patient: " + patientName;
+		log(identity, logString);
+		return getRecordFromName(query, patientName, division);
+	}
 
 	public ArrayList<Record> getRecordWithPatient(Identity identity) throws SQLException {
 		String query = "SELECT * FROM records WHERE patient=?";
@@ -134,6 +142,29 @@ public class DatabaseManager {
 	private ArrayList<Record> getRecordFromName(String query, String name) throws SQLException {
 		PreparedStatement prepStmt = c.prepareStatement(query);
 		prepStmt.setString(1, name);
+		ResultSet rs = prepStmt.executeQuery();
+
+		ArrayList<Record> records = new ArrayList<Record>();
+
+		while (rs.next()) {
+			int id = rs.getInt(1);
+			String pat = rs.getString(2);
+			String nur = rs.getString(3);
+			String doc = rs.getString(4);
+			String div = rs.getString(5);
+			String data = rs.getString(6);
+
+			records.add(new Record(id, pat, nur, doc, div, data));
+		}
+		prepStmt.close();
+
+		return records;
+	}
+	
+	private ArrayList<Record> getRecordFromName(String query, String name, String division) throws SQLException {
+		PreparedStatement prepStmt = c.prepareStatement(query);
+		prepStmt.setString(1, name);
+		prepStmt.setString(2, division);
 		ResultSet rs = prepStmt.executeQuery();
 
 		ArrayList<Record> records = new ArrayList<Record>();
