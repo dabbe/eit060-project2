@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.security.KeyStore;
-import java.security.cert.CertificateEncodingException;
-
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
@@ -14,8 +12,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 import resources.Identity;
+import resources.Record;
 import resources.Request;
-import server.Record;
 
 import com.google.gson.Gson;
 
@@ -41,7 +39,7 @@ public class HospitalConnection {
 		System.out.println("Handshake complete");
 		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		out = new PrintWriter(socket.getOutputStream());
-		
+
 		splitDN(socket.getSession().getLocalPrincipal().getName());
 	}
 
@@ -56,7 +54,7 @@ public class HospitalConnection {
 		}
 		return "";
 	}
-	
+
 	private void splitDN(String dn) {
 		identity = new Identity();
 		String[] params = dn.split(",");
@@ -70,19 +68,27 @@ public class HospitalConnection {
 			}
 		}
 	}
-	
-	public String getCN(){
+
+	public String getCN() {
 		return identity.getCN();
 	}
 
 	public String getOU() {
 		return identity.getOU();
 	}
-	
-	public void createRecord(Record record) {
+
+	public String createRecord(Record record) throws IOException {
 		Request request = new Request(Request.CREATE_RECORD, gson.toJson(record));
 		out.println(gson.toJson(request));
 		out.flush();
+		return in.readLine();
+	}
+
+	public String updateRecord(Record record) throws IOException {
+		Request request = new Request(Request.UPDATE_RECORD, gson.toJson(record));
+		out.println(gson.toJson(request));
+		out.flush();
+		return in.readLine();
 	}
 
 	public String getResponse(String operation) {
@@ -124,4 +130,5 @@ public class HospitalConnection {
 		ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 		return ctx.getSocketFactory();
 	}
+
 }

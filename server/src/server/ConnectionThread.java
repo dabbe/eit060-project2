@@ -11,6 +11,7 @@ import javax.net.ssl.SSLSocket;
 import javax.security.cert.X509Certificate;
 
 import resources.Identity;
+import resources.Record;
 import resources.Request;
 
 import com.google.gson.Gson;
@@ -70,7 +71,7 @@ public class ConnectionThread extends Thread {
 					break;
 				case Request.UPDATE_RECORD:
 					Record updateRecord = gson.fromJson(request.getData(), Record.class);
-					monitor.updateRecord(identity, updateRecord);
+					out.println(monitor.updateRecord(identity, updateRecord));
 					break;
 				case Request.DELETE_RECORD:
 					Record deleteRecord = gson.fromJson(request.getData(), Record.class);

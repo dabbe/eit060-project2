@@ -1,14 +1,9 @@
 package server;
 
 import java.io.*;
-import java.net.*;
 import java.security.KeyStore;
 
-import javax.net.*;
 import javax.net.ssl.*;
-import javax.security.cert.X509Certificate;
-
-import com.google.gson.Gson;
 
 public class Server {
 	
@@ -57,8 +52,8 @@ public class Server {
 			KeyStore ks = KeyStore.getInstance("JKS");
 			KeyStore ts = KeyStore.getInstance("JKS");
 			char[] password = "password".toCharArray();
-			ks.load(new FileInputStream(new File("CA/serverkeystore").getAbsolutePath()), password);
-			ts.load(new FileInputStream(new File("CA/servertruststore").getAbsolutePath()), password);
+			ks.load(new FileInputStream(new File("bin/serverkeystore").getAbsolutePath()), password);
+			ts.load(new FileInputStream(new File("bin/servertruststore").getAbsolutePath()), password);
 			kmf.init(ks, password);
 			tmf.init(ts);
 			ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);

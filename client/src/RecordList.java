@@ -7,7 +7,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import server.Record;
+import resources.Record;
 
 @SuppressWarnings("rawtypes")
 public class RecordList extends JList implements ListSelectionListener {
@@ -31,8 +31,16 @@ public class RecordList extends JList implements ListSelectionListener {
 		setVisibleRowCount(-1);
 	}
 
+	public Record getCurrentSelected() {
+		return (Record) model.get(getSelectedIndex());
+	}
+
 	public void addObserver(Observer o) {
 		observers.add(o);
+	}
+	
+	public void refreshList(){
+		setModel(model);
 	}
 
 	public void updateList(String name) {
@@ -54,8 +62,9 @@ public class RecordList extends JList implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-		if(getSelectedIndex() < 0) return;
-		updateAll((Record)model.get(getSelectedIndex()));
+		if (getSelectedIndex() < 0)
+			return;
+		updateAll((Record) model.get(getSelectedIndex()));
 	}
 
 }

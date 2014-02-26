@@ -1,4 +1,4 @@
-package server;
+package resources;
 
 public class Record {
 
@@ -8,8 +8,8 @@ public class Record {
 	private String doctor;
 	private String division;
 	private String data;
-	
-	public Record(int id, String patient, String nurse, String doctor, String division, String data){
+
+	public Record(int id, String patient, String nurse, String doctor, String division, String data) {
 		this.id = id;
 		this.patient = patient;
 		this.nurse = nurse;
@@ -17,7 +17,7 @@ public class Record {
 		this.division = division;
 		this.data = data;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -33,8 +33,8 @@ public class Record {
 	public String getDoctor() {
 		return doctor;
 	}
-	
-	public void setDoctor(String doctor){
+
+	public void setDoctor(String doctor) {
 		this.doctor = doctor;
 	}
 
@@ -42,15 +42,19 @@ public class Record {
 		return division;
 	}
 
+	public void setDivision(String division) {
+		this.division = division;
+	}
+
 	public String getData() {
 		return data;
 	}
-	
+
 	@Override
 	public String toString() {
 		return data;
 	}
-	
+
 	public String toLongString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("ID: " + id);
@@ -59,8 +63,12 @@ public class Record {
 		sb.append("\nDoctor: " + doctor);
 		sb.append("\nDivision: " + division);
 		sb.append("\nData: " + data);
-		
+
 		return sb.toString();
+	}
+
+	public void setData(String text) {
+		data = text;
 	}
 
 }

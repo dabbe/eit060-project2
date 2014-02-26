@@ -1,4 +1,4 @@
-import server.Record;
+import resources.Record;
 
 
 public interface Observer {

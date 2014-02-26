@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import resources.HospitalMember;
 import resources.Identity;
+import resources.Record;
 
 public class Monitor {
 
@@ -66,6 +67,7 @@ public class Monitor {
 		try {
 			if (identity.getOU().equals(HospitalMember.DOCTOR)) {
 				record.setDoctor(identity.getCN());
+				record.setDivision(dbm.getDivisionFromName(identity.getCN()));
 				dbm.createRecord(record, identity);
 				return true;
 			}
@@ -75,17 +77,19 @@ public class Monitor {
 		return false;
 	}
 	
-	public void updateRecord(Identity identity, Record record) {
+	public boolean updateRecord(Identity identity, Record record) {
 		String CN = identity.getCN();
 		String OU = identity.getOU();
 
 		try {
 			if ((OU.equals(HospitalMember.DOCTOR) && CN.equals(record.getDoctor())) || (OU.equals(HospitalMember.NURSE) && CN.equals(record.getNurse()))) {
 				dbm.updatePatientRecord(record, identity);
+				return true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public void deleteRecord(Identity identity, Record record) {
