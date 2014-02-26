@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,7 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import server.Record;
 
 @SuppressWarnings("rawtypes")
-public class NameList extends JList implements ListSelectionListener {
+public class RecordList extends JList implements ListSelectionListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -20,7 +19,7 @@ public class NameList extends JList implements ListSelectionListener {
 	private Monitor monitor;
 
 	@SuppressWarnings("unchecked")
-	public NameList(DefaultListModel model, Monitor monitor) {
+	public RecordList(DefaultListModel model, Monitor monitor) {
 		super();
 		this.model = model;
 		this.monitor = monitor;
