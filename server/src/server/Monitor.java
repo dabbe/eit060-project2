@@ -56,7 +56,7 @@ public class Monitor {
 		}
 		return false;
 	}
-
+	
 	public void updateRecord(Identity identity, Record record) {
 		String CN = identity.getCN();
 		String OU = identity.getOU();
@@ -71,12 +71,10 @@ public class Monitor {
 	}
 
 	public void deleteRecord(Identity identity, Record record) {
-		String CN = identity.getCN();
 		String OU = identity.getOU();
-
+		
 		try {
-			if ((OU.equals(HospitalMember.DOCTOR) && CN.equals(record.getDoctor())) || (OU.equals(HospitalMember.NURSE) && CN.equals(record.getNurse()))
-					|| OU.equals(HospitalMember.GOV)) {
+			if (OU.equals(HospitalMember.GOV)) {
 				dbm.deleteRecord(record, identity);
 			}
 		} catch (SQLException e) {
