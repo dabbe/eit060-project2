@@ -1,4 +1,4 @@
-package server;
+package resources;
 
 public class Record {
 
@@ -40,6 +40,10 @@ public class Record {
 
 	public String getDivision() {
 		return division;
+	}
+	
+	public void setDivision(String division){
+		this.division = division;
 	}
 
 	public String getData() {

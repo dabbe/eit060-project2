@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import server.Record;
+import resources.Record;
 
 public class CreateWindow extends JFrame {
 
@@ -25,7 +25,7 @@ public class CreateWindow extends JFrame {
 		this.monitor = monitor;
 
 		JPanel container = new JPanel();
-		container.setLayout(new GridLayout(4, 2));
+		container.setLayout(new GridLayout(3, 2));
 		container.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 		container.add(new JLabel("Patient name:"));
@@ -36,11 +36,7 @@ public class CreateWindow extends JFrame {
 		nurse = new JTextField();
 		container.add(nurse);
 
-		container.add(new JLabel("Division:"));
-		division = new JTextField();
-		container.add(division);
-
-		container.add(new JLabel("Medical data:\t\t"));
+		container.add(new JLabel("Medical data:      "));
 		data = new JTextField();
 		container.add(data);
 
@@ -58,10 +54,10 @@ public class CreateWindow extends JFrame {
 	private Record getRecord() {
 		String p = patientName.getText();
 		String n = nurse.getText();
-		String d = "";
-		String div = division.getText();
+		String doc = "";
+		String div = "";
 		String dat = data.getText();
-		return new Record(-1, p, n, d, div, dat);
+		return new Record(-1, p, n, doc, div, dat);
 	}
 
 	public class OKButton extends JButton implements ActionListener {

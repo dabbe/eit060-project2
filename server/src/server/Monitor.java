@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import resources.HospitalMember;
 import resources.Identity;
+import resources.Record;
 
 public class Monitor {
 
@@ -73,6 +74,7 @@ public class Monitor {
 		try {
 			if (identity.getOU().equals(HospitalMember.DOCTOR)) {
 				record.setDoctor(identity.getCN());
+				record.setDivision(dbm.getDivisionFromName(identity.getCN()));
 				dbm.createRecord(record, identity);
 				return true;
 			}

@@ -11,6 +11,7 @@ import javax.net.ssl.SSLSocket;
 import javax.security.cert.X509Certificate;
 
 import resources.Identity;
+import resources.Record;
 import resources.Request;
 
 import com.google.gson.Gson;

@@ -7,7 +7,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import server.Record;
+import resources.Record;
 
 @SuppressWarnings("rawtypes")
 public class RecordList extends JList implements ListSelectionListener {

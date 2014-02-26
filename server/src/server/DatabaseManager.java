@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import resources.HospitalMember;
 import resources.Identity;
+import resources.Record;
 
 public class DatabaseManager {
 

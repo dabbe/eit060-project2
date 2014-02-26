@@ -1,6 +1,6 @@
 import javax.swing.JTextArea;
 
-import server.Record;
+import resources.Record;
 
 public class FileArea extends JTextArea implements Observer {
 	

@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
-import server.Record;
+import resources.Record;
 
 import com.google.gson.Gson;
 
@@ -89,7 +89,6 @@ public class Monitor {
 
 	public synchronized void createRecord(Record record) {
 		c.createRecord(record);
-
 	}
 
 	public static void main(String[] args) {

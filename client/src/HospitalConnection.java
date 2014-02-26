@@ -14,8 +14,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 import resources.Identity;
+import resources.Record;
 import resources.Request;
-import server.Record;
 
 import com.google.gson.Gson;
 
