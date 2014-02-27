@@ -26,10 +26,11 @@ public class SaveButton extends JButton implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Record record = list.getCurrentSelected();
 		if(record == null) return;
-		record.setData(textArea.getText());
+
 
 		try {
 			if (Boolean.parseBoolean(monitor.updateRecord(record))) {
+				record.setData(textArea.getText());
 				JOptionPane.showMessageDialog(null, "Patient medical data updated.");
 				list.refreshList();
 			} else {
