@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Scanner;
 
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
@@ -15,19 +14,20 @@ import resources.Record;
 import resources.Request;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class ConnectionThread extends Thread {
 	private SSLSocket socket;
 	private Monitor monitor;
 	private Identity identity;
-	
+
 	private Gson gson;
 
 	public ConnectionThread(SSLSocket socket, Monitor monitor) throws IOException {
 		this.socket = socket;
 		this.monitor = monitor;
 		this.gson = new Gson();
-		
+
 		SSLSession session = socket.getSession();
 		X509Certificate cert = (X509Certificate) session.getPeerCertificateChain()[0];
 		splitDN(cert.getSubjectDN().getName());
@@ -56,30 +56,32 @@ public class ConnectionThread extends Thread {
 
 			String clientMsg = null;
 			while ((clientMsg = in.readLine()) != null) {
-				Scanner scan = new Scanner(clientMsg);
-				
-				Request request = gson.fromJson(clientMsg, Request.class);
-				int type = request.getType();
-				
-				switch(type){
-				case Request.GET_RECORDS:
-					out.println(gson.toJson(monitor.getRecordsOfPatient(identity, request.getData())));
-					break;
-				case Request.CREATE_RECORD:
-					Record createRecord = gson.fromJson(request.getData(), Record.class);
-					out.println(monitor.createRecord(identity, createRecord));
-					break;
-				case Request.UPDATE_RECORD:
-					Record updateRecord = gson.fromJson(request.getData(), Record.class);
-					out.println(monitor.updateRecord(identity, updateRecord));
-					break;
-				case Request.DELETE_RECORD:
-					Record deleteRecord = gson.fromJson(request.getData(), Record.class);
-					out.println(monitor.deleteRecord(identity, deleteRecord));
-					break;
+
+				int type = -1;
+				try {
+					Request request = gson.fromJson(clientMsg, Request.class);
+					type = request.getType();
+
+					switch (type) {
+					case Request.GET_RECORDS:
+						out.println(gson.toJson(monitor.getRecordsOfPatient(identity, request.getData())));
+						break;
+					case Request.CREATE_RECORD:
+						Record createRecord = gson.fromJson(request.getData(), Record.class);
+						out.println(monitor.createRecord(identity, createRecord));
+						break;
+					case Request.UPDATE_RECORD:
+						Record updateRecord = gson.fromJson(request.getData(), Record.class);
+						out.println(monitor.updateRecord(identity, updateRecord));
+						break;
+					case Request.DELETE_RECORD:
+						Record deleteRecord = gson.fromJson(request.getData(), Record.class);
+						out.println(monitor.deleteRecord(identity, deleteRecord));
+						break;
+					}
+				} catch (JsonSyntaxException e) {
+					continue;
 				}
-			
-				scan.close();
 				out.flush();
 			}
 			in.close();

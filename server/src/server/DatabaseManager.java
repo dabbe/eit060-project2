@@ -1,5 +1,7 @@
 package server;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,9 +16,9 @@ public class DatabaseManager {
 
 	private Connection c = null;
 
-	public DatabaseManager() throws ClassNotFoundException, SQLException {
+	public DatabaseManager() throws ClassNotFoundException, SQLException, IOException {
 		Class.forName("org.sqlite.JDBC");	
-		c = DriverManager.getConnection("jdbc:sqlite:eit060.db");
+		c = DriverManager.getConnection("jdbc:sqlite:" + new File(new File(".").getAbsolutePath()).getCanonicalPath() + "/Desktop/EIT060/eit060.db");
 	}
 
 	public void closeConnection() throws SQLException {

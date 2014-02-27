@@ -1,4 +1,5 @@
 package client;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +13,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
+import javax.swing.JOptionPane;
 
 import resources.Identity;
 import resources.Record;
@@ -91,7 +93,6 @@ public class HospitalConnection {
 		out.flush();
 		return in.readLine();
 	}
-	
 
 	public String deleteRecord(Record record) throws IOException {
 		Request request = new Request(Request.DELETE_RECORD, gson.toJson(record));
@@ -116,17 +117,24 @@ public class HospitalConnection {
 		KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
 		TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
 		SSLContext ctx = SSLContext.getInstance("TLS");
-		ks.load(new FileInputStream(new File("bin/clientkeystore").getAbsolutePath()), pw); // keystore
-		// password
-		// (storepass)
-		ts.load(new FileInputStream(new File("bin/clienttruststore").getAbsolutePath()), pw); // truststore
-		// password
-		// (storepass);
-		kmf.init(ks, pw); // user password (keypass)
-		tmf.init(ts); // keystore can be used as truststore here
-		ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+
+		File currentDirectory = new File(new File(".").getAbsolutePath());
+		try {
+
+			ks.load(new FileInputStream(currentDirectory.getCanonicalPath() + "/Desktop/EIT060/clientkeystore"), pw); // keystore
+			// password
+			// (storepass)
+			ts.load(new FileInputStream(currentDirectory.getCanonicalPath() + "/Desktop/EIT060/clienttruststore"), pw); // truststore
+			// password
+			// (storepass);
+			kmf.init(ks, pw); // user password (keypass)
+			tmf.init(ts); // keystore can be used as truststore here
+			ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, currentDirectory.getCanonicalPath());
+			JOptionPane.showMessageDialog(null, currentDirectory.getAbsolutePath());
+		}
 		return ctx.getSocketFactory();
 	}
-
 
 }

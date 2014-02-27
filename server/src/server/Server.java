@@ -1,29 +1,79 @@
 package server;
 
-import java.io.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.KeyStore;
 
-import javax.net.ssl.*;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.TrustManagerFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class Server {
-	
-	
+
 	public static void main(String args[]) {
-		System.out.println("\nServer Started\n");
-		int port = -1;
-		if (args.length >= 1) {
-			port = Integer.parseInt(args[0]);
-		} else{
-			port = 9999;
+		new Server().createFrame();
+	}
+
+	private void createFrame() {
+		JFrame frame = new JFrame();
+		JButton button = new JButton("Start");
+		button.addActionListener(new Listener(frame, button));
+		frame.add(button);
+
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+	}
+
+	private class Listener implements ActionListener {
+
+		private boolean started = false;
+		private final JButton button;
+		private final JFrame frame;
+
+		public Listener(JFrame frame, JButton button) {
+			this.button = button;
+			this.frame = frame;
 		}
-		try {
-			SSLServerSocketFactory ssf = getServerSocketFactory("TLS");
-			SSLServerSocket ss = (SSLServerSocket) ssf.createServerSocket(port);
-			ss.setNeedClientAuth(true);
-			listen(ss);
-		} catch (IOException e) {
-			System.out.println("Unable to start Server: " + e.getMessage());
-			e.printStackTrace();
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+
+			if (!started) {
+				final int port = 9999;
+				new Thread() {
+					@Override
+					public void run() {
+						try {
+							button.setText("Listening on port " + port + " | Press to shut down");
+							frame.pack();
+							Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+							frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+							SSLServerSocketFactory ssf = getServerSocketFactory("TLS");
+							SSLServerSocket ss = (SSLServerSocket) ssf.createServerSocket(port);
+							ss.setNeedClientAuth(true);
+							listen(ss);
+						} catch (IOException e) {
+							System.exit(1);
+							System.out.println("Unable to start Server: " + e.getMessage());
+						}
+					}
+				}.start();
+			} else {
+				System.exit(1);
+			}
 		}
 	}
 
@@ -41,7 +91,6 @@ public class Server {
 			}
 		}
 	}
-	
 
 	private static SSLServerSocketFactory getServerSocketFactory(String type) {
 		SSLServerSocketFactory ssf = null;
@@ -52,8 +101,10 @@ public class Server {
 			KeyStore ks = KeyStore.getInstance("JKS");
 			KeyStore ts = KeyStore.getInstance("JKS");
 			char[] password = "password".toCharArray();
-			ks.load(new FileInputStream(new File("bin/serverkeystore").getAbsolutePath()), password);
-			ts.load(new FileInputStream(new File("bin/servertruststore").getAbsolutePath()), password);
+
+			File currentDirectory = new File(new File(".").getAbsolutePath());
+			ks.load(new FileInputStream(currentDirectory.getCanonicalPath() + "/Desktop/EIT060/serverkeystore"), password);
+			ts.load(new FileInputStream(currentDirectory.getCanonicalPath() + "/Desktop/EIT060/servertruststore"), password);
 			kmf.init(ks, password);
 			tmf.init(ts);
 			ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
@@ -63,4 +114,5 @@ public class Server {
 		}
 		return ssf;
 	}
+
 }

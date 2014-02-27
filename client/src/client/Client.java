@@ -43,6 +43,7 @@ public class Client {
 				new GUI(Client.this, c);
 				frame.dispose();
 			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(null, ex);
 				incorrect++;
 				label.setText("<HTML><CENTER>Welcome to DataJournal.<BR>Please enter your password:<BR><font color='red'>Incorrect password! (" + incorrect
 						+ ")</font></CENTER></HTML>");
