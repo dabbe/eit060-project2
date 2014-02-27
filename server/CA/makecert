@@ -7,18 +7,23 @@ if [ "$#" -ne 2 ]; then
 fi
 
 c="CN="$1",OU="$2""
+temp=""$1", "$2""
+mkdir "$temp"
 
-keytool -genkey -alias client -keyalg RSA -keystore clientkeystore -keypass password -storepass password -dname "$c"
+keytool -genkey -alias client -keyalg RSA -keystore "$temp"/clientkeystore -keypass password -storepass password -dname "$c"
 
-keytool -certreq -alias client -file req.csr -keystore clientkeystore -storepass password
+keytool -certreq -alias client -file req.csr -keystore "$temp"/clientkeystore -storepass password
 
 openssl x509 -req -CAkey ca.key -CA ca.crt -set_serial 1 -in req.csr -out signed.crt -days 999 -passin pass:password
 
-keytool -import -file ca.crt -alias ca -keystore clientkeystore -storepass password -noprompt
+keytool -import -file ca.crt -alias ca -keystore "$temp"/clientkeystore -storepass password -noprompt
 
-keytool -import -file signed.crt -alias client -keystore clientkeystore -storepass password -noprompt
+keytool -import -file signed.crt -alias client -keystore "$temp"/clientkeystore -storepass password -noprompt
 
-keytool -import -file ca.crt -alias ca -keystore clienttruststore -storepass password -noprompt
+keytool -import -file ca.crt -alias ca -keystore "$temp"/clienttruststore -storepass password -noprompt
+
+
+
 
 rm req.csr
 rm signed.crt

@@ -46,5 +46,4 @@ public class DeleteButton extends JButton implements ActionListener {
 			e1.printStackTrace();
 		}
 	}
-
 }
