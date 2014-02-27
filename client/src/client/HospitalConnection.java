@@ -1,3 +1,4 @@
+package client;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +24,6 @@ public class HospitalConnection {
 	private BufferedReader in;
 	private PrintWriter out;
 	private Gson gson;
-	private String name;
 	private Identity identity;
 
 	public HospitalConnection(String host, int port, char[] pw) throws IOException {

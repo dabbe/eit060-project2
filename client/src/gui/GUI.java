@@ -1,3 +1,4 @@
+package gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -12,25 +13,26 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
+import client.Client;
+import client.HospitalConnection;
 import resources.HospitalMember;
 
 public class GUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	public GUI(final Monitor monitor, HospitalConnection hc) {
+	public GUI(final Client client, HospitalConnection hc) {
 
 		setTitle("DataJournal - " + hc.getCN());
-		
-		@SuppressWarnings("rawtypes")
+
 		DefaultListModel model = new DefaultListModel();
-		RecordList list = new RecordList(model, monitor);
+		RecordList list = new RecordList(model, client);
 
 		JPanel container = new JPanel(new BorderLayout());
 		container.setPreferredSize(new Dimension(600, 600));
 		container.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-		SearchField search = new SearchField(monitor, list);
+		SearchField search = new SearchField(list);
 		container.add(search, BorderLayout.NORTH);
 
 		JPanel leftBar = new JPanel(new BorderLayout());
@@ -63,18 +65,18 @@ public class GUI extends JFrame {
 
 			// Nurse : Search, Save
 			leftFooter.setVisible(false);
-			rightFooter.add(new SaveButton(textArea, monitor, list));
+			rightFooter.add(new SaveButton(textArea, client, list));
 
 		} else if (ou.equals(HospitalMember.DOCTOR)) {
 
 			// Doctor : Search, Create, Save
-			leftFooter.add(new CreateButton(monitor));
-			rightFooter.add(new SaveButton(textArea, monitor, list));
+			leftFooter.add(new CreateButton(client));
+			rightFooter.add(new SaveButton(textArea, client, list));
 
 		} else if (ou.equals(HospitalMember.GOV)) {
 
 			// Government : Search, Delete
-			leftFooter.add(new DeleteButton(monitor, list, textArea, header));
+			leftFooter.add(new DeleteButton(client, list, textArea, header));
 			textArea.setEditable(false);
 		}
 
@@ -110,7 +112,7 @@ public class GUI extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				monitor.closeConnection();
+				client.closeConnection();
 				GUI.this.dispose();
 				System.exit(1);
 			}

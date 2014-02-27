@@ -5,22 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import resources.Identity;
 import resources.Record;
 
 public class DatabaseManager {
-
-	// public static
-
-	// Metod för att hämta patient
-	// Hitta hans id och sen hämta alla hans record
-
-	// Change info (update)
-
-	//
 
 	private Connection c = null;
 
@@ -31,21 +21,6 @@ public class DatabaseManager {
 
 	public void closeConnection() throws SQLException {
 		c.close();
-	}
-	
-	public void createTable() throws SQLException{
-		Statement sta = c.createStatement(); 
-	      int count = sta.executeUpdate(
-	        "CREATE TABLE records ("
-	        + " id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-	        + " patient VARCHAR(255) NOT NULL,"
-	        + " nurse VARCHAR(255) NOT NULL,"
-	        + " doctor VARCHAR(255) NOT NULL,"
-	        + " division VARCHAR(255) NOT NULL,"
-	        + " data VARCHAR(8000) NOT NULL)");
-	      System.out.println("Table created.");
-	      sta.close();        
-
 	}
 
 	public void createRecord(Record record, Identity identity) throws SQLException {

@@ -1,7 +1,9 @@
+package gui;
 import java.awt.Insets;
 
 import javax.swing.JTextArea;
 
+import client.Observer;
 import resources.Record;
 
 public class Header extends JTextArea implements Observer {

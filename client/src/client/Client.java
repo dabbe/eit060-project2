@@ -1,10 +1,12 @@
+package client;
+import gui.GUI;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +21,7 @@ import resources.Record;
 
 import com.google.gson.Gson;
 
-public class Monitor {
+public class Client {
 
 	private HospitalConnection c;
 	private final int port = 9999;
@@ -38,7 +40,7 @@ public class Monitor {
 		public void actionPerformed(ActionEvent e) {
 			try {
 				c = new HospitalConnection(host, port, textField.getPassword());
-				new GUI(Monitor.this, c);
+				new GUI(Client.this, c);
 				frame.dispose();
 			} catch (IOException ex) {
 				incorrect++;
@@ -56,7 +58,7 @@ public class Monitor {
 		}
 	};
 
-	private Monitor() {
+	private Client() {
 		this.gson = new Gson();
 		createLoginWindow();
 	}
@@ -85,7 +87,7 @@ public class Monitor {
 		frame.setVisible(true);
 	}
 
-	public synchronized List<Record> getRecordsOfPatient(String patientName) {
+	public List<Record> getRecordsOfPatient(String patientName) {
 		String s = c.getRecordsOfPatient(patientName);
 		Record[] records;
 		if(s.equals("null")){
@@ -97,15 +99,15 @@ public class Monitor {
 		return Arrays.asList(records);
 	}
 
-	public synchronized String createRecord(Record record) throws IOException {
+	public String createRecord(Record record) throws IOException {
 		return c.createRecord(record);
 	}
 
 	public static void main(String[] args) {
-		new Monitor();
+		new Client();
 	}
 
-	public synchronized void closeConnection() {
+	public void closeConnection() {
 		c.close();
 	}
 

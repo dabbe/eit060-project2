@@ -1,3 +1,4 @@
+package gui;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,19 +8,19 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import client.Client;
+import client.Observer;
 import resources.Record;
 
-@SuppressWarnings("rawtypes")
 public class RecordList extends JList implements ListSelectionListener {
 
 	private static final long serialVersionUID = 1L;
 
 	private DefaultListModel model;
 	private LinkedList<Observer> observers;
-	private Monitor monitor;
+	private Client monitor;
 
-	@SuppressWarnings("unchecked")
-	public RecordList(DefaultListModel model, Monitor monitor) {
+	public RecordList(DefaultListModel model, Client monitor) {
 		super();
 		this.model = model;
 		this.monitor = monitor;

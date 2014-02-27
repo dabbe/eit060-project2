@@ -1,3 +1,4 @@
+package gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,11 +8,9 @@ import javax.swing.JTextField;
 public class SearchField extends JTextField implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private Monitor monitor;
 	private RecordList recordList;
 
-	public SearchField(Monitor monitor, RecordList recordList) {
-		this.monitor = monitor;
+	public SearchField(RecordList recordList) {
 		this.recordList = recordList;
 		setLayout(new BorderLayout());
 		addActionListener(this);

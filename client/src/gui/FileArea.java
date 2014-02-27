@@ -1,5 +1,7 @@
+package gui;
 import javax.swing.JTextArea;
 
+import client.Observer;
 import resources.Record;
 
 public class FileArea extends JTextArea implements Observer {

@@ -1,3 +1,4 @@
+package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -5,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+import client.Client;
 import resources.Record;
 
 public class DeleteButton extends JButton implements ActionListener {
@@ -12,11 +14,11 @@ public class DeleteButton extends JButton implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	
 	private RecordList list;
-	private Monitor monitor;
+	private Client monitor;
 	private FileArea area;
 	private Header header;
 
-	public DeleteButton(Monitor monitor, RecordList list, FileArea area, Header header) {
+	public DeleteButton(Client monitor, RecordList list, FileArea area, Header header) {
 		super("Delete");
 		this.list = list;
 		this.monitor = monitor;
