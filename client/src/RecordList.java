@@ -41,7 +41,7 @@ public class RecordList extends JList implements ListSelectionListener {
 		observers.add(o);
 	}
 	
-	public void remove(int index){
+	public void removeWithIndex(int index){
 		model.remove(index);
 	}
 

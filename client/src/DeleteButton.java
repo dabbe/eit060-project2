@@ -35,7 +35,7 @@ public class DeleteButton extends JButton implements ActionListener {
 		try {
 			if (Boolean.parseBoolean(monitor.deleteRecord(record))) {
 				JOptionPane.showMessageDialog(null, "Record deleted.");
-				list.remove(index);
+				list.removeWithIndex(index);
 				list.refreshList();
 				area.setText("");
 				header.clear();

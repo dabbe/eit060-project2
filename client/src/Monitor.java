@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -85,7 +86,15 @@ public class Monitor {
 	}
 
 	public synchronized List<Record> getRecordsOfPatient(String patientName) {
-		return Arrays.asList(gson.fromJson(c.getRecordsOfPatient(patientName), Record[].class));
+		String s = c.getRecordsOfPatient(patientName);
+		Record[] records;
+		if(s.equals("null")){
+			records = new Record[0];
+		} else{
+			records = gson.fromJson(s, Record[].class);
+		}
+		
+		return Arrays.asList(records);
 	}
 
 	public synchronized String createRecord(Record record) throws IOException {

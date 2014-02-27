@@ -53,7 +53,7 @@ public class HospitalConnection {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "";
+		return "[]";
 	}
 
 	private void splitDN(String dn) {

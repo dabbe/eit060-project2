@@ -98,7 +98,7 @@ public class DatabaseManager {
 	}
 	
 	public ArrayList<Record> getRecordsOfPatient(Identity identity, String patientName, String division) throws SQLException {
-		String query = "SELECT * FROM records WHERE patient=?,division=?";
+		String query = "SELECT * FROM records WHERE patient=? AND division=?";
 		
 		String logString = "Recieved all records associated with patient: " + patientName;
 		log(identity, logString);
