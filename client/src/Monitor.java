@@ -46,7 +46,7 @@ public class Monitor {
 						+ ")</font></CENTER></HTML>");
 				textField.setText("");
 				frame.pack();
-
+				
 				if (incorrect >= 5) {
 					frame.dispose();
 					JOptionPane.showMessageDialog(null, "Entered incorrect password too many times!");

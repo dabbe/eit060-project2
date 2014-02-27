@@ -28,11 +28,11 @@ public class Monitor {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public synchronized ArrayList<Record> getRecordsOfPatient(Identity identity, String patientName) {
 		String CN = identity.getCN();
 		String OU = identity.getOU();
-		
+
 		try {
 			if (OU.equals(HospitalMember.GOV)) {
 				return dbm.getRecordsOfPatient(identity, patientName);
@@ -47,7 +47,7 @@ public class Monitor {
 		}
 		return null;
 	}
-	
+
 	public synchronized ArrayList<Record> getRecords(Identity identity) {
 		try {
 			if (identity.getOU().equals(HospitalMember.DOCTOR)) {
@@ -76,7 +76,7 @@ public class Monitor {
 		}
 		return false;
 	}
-	
+
 	public boolean updateRecord(Identity identity, Record record) {
 		String CN = identity.getCN();
 		String OU = identity.getOU();
@@ -94,7 +94,7 @@ public class Monitor {
 
 	public boolean deleteRecord(Identity identity, Record record) {
 		String OU = identity.getOU();
-		
+
 		try {
 			if (OU.equals(HospitalMember.GOV)) {
 				dbm.deleteRecord(record, identity);

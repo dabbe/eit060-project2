@@ -20,6 +20,8 @@ public class GUI extends JFrame {
 
 	public GUI(final Monitor monitor, HospitalConnection hc) {
 
+		setTitle("DataJournal - " + hc.getCN());
+		
 		@SuppressWarnings("rawtypes")
 		DefaultListModel model = new DefaultListModel();
 		RecordList list = new RecordList(model, monitor);
@@ -55,6 +57,7 @@ public class GUI extends JFrame {
 			search.setVisible(false);
 			leftFooter.setVisible(false);
 			rightFooter.setVisible(false);
+			list.updateList(hc.getCN());
 
 		} else if (ou.equals(HospitalMember.NURSE)) {
 
