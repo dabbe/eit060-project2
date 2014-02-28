@@ -67,7 +67,7 @@ public class DatabaseManager {
 		prepStmt.setString(5, record.getData());
 		prepStmt.setInt(6, record.getId());
 
-		prepStmt.executeUpdate();
+		System.out.println(prepStmt.executeUpdate());
 		prepStmt.close();
 		String logString = "Updated record for patient " + record.getPatient();
 		log(identity, logString);

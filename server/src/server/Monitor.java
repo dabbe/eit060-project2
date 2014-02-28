@@ -86,8 +86,14 @@ public class Monitor {
 
 		try {
 			Record dbRecord = dbm.getRecordFromId(record.getId());
+			System.out.println("Updating record with id " + record.getId());
+			System.out.println("CN: " + CN + " OU: " + OU);
+			System.out.println("DB RECORD " + dbRecord.toLongString());
+			System.out.println("CLIENT RECORD " + record.toLongString());
 			if ((OU.equals(HospitalMember.DOCTOR) && CN.equals(dbRecord.getDoctor())) || (OU.equals(HospitalMember.NURSE) && CN.equals(dbRecord.getNurse()))) {
+				
 				dbRecord.setData(record.getData());
+				System.out.println("Updating");
 				dbm.updatePatientRecord(dbRecord, identity);
 				return true;
 			}

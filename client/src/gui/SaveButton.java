@@ -31,11 +31,16 @@ public class SaveButton extends JButton implements ActionListener {
 		if(record == null) return;
 
 		try {
+			String oldData = record.getData();
+			record.setData(textArea.getText());
 			if (Boolean.parseBoolean(monitor.updateRecord(record))) {
-				record.setData(textArea.getText());
+				//record.setData(textArea.getText());
 				JOptionPane.showMessageDialog(null, "Patient medical data updated.");
 				list.refreshList();
 			} else {
+				record.setData(oldData);
+				textArea.setText(oldData);
+				list.refreshList();
 				JOptionPane.showMessageDialog(null, "There was an error.");
 			}
 		} catch (Exception e1) {
