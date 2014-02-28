@@ -145,9 +145,11 @@ public class DatabaseManager {
 			String doc = rs.getString(4);
 			String div = rs.getString(5);
 			String data = rs.getString(6);
-
+			
+			prepStmt.close();
 			return new Record(id, pat, nur, doc, div, data);
 		}
+		prepStmt.close();
 		return null;
 	}
 
