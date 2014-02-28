@@ -122,11 +122,7 @@ public class HospitalConnection {
 		try {
 
 			ks.load(new FileInputStream(currentDirectory.getCanonicalPath() + "/Desktop/EIT060/clientkeystore"), pw); // keystore
-			// password
-			// (storepass)
 			ts.load(new FileInputStream(currentDirectory.getCanonicalPath() + "/Desktop/EIT060/clienttruststore"), pw); // truststore
-			// password
-			// (storepass);
 			kmf.init(ks, pw); // user password (keypass)
 			tmf.init(ts); // keystore can be used as truststore here
 			ctx.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);

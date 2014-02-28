@@ -66,7 +66,7 @@ public class Monitor {
 		return null;
 	}
 
-	public boolean createRecord(Identity identity, Record record) {
+	public synchronized boolean createRecord(Identity identity, Record record) {
 		try {
 			if (identity.getOU().equals(HospitalMember.DOCTOR)) {
 				record.setDoctor(identity.getCN());
@@ -80,7 +80,7 @@ public class Monitor {
 		return false;
 	}
 
-	public boolean updateRecord(Identity identity, Record record) {
+	public synchronized boolean updateRecord(Identity identity, Record record) {
 		String CN = identity.getCN();
 		String OU = identity.getOU();
 
@@ -95,7 +95,7 @@ public class Monitor {
 		return false;
 	}
 
-	public boolean deleteRecord(Identity identity, Record record) {
+	public synchronized boolean deleteRecord(Identity identity, Record record) {
 		String OU = identity.getOU();
 
 		try {

@@ -54,7 +54,6 @@ public class GUI extends JFrame {
 
 		if (ou.equals(HospitalMember.PATIENT)) {
 
-			// Patient : Read only
 			textArea.setEditable(false);
 			search.setVisible(false);
 			leftFooter.setVisible(false);
@@ -62,20 +61,17 @@ public class GUI extends JFrame {
 			list.updateList(hc.getCN());
 
 		} else if (ou.equals(HospitalMember.NURSE)) {
-
-			// Nurse : Search, Save
+			
 			leftFooter.setVisible(false);
 			rightFooter.add(new SaveButton(textArea, client, list));
 
 		} else if (ou.equals(HospitalMember.DOCTOR)) {
 
-			// Doctor : Search, Create, Save
 			leftFooter.add(new CreateButton(client));
 			rightFooter.add(new SaveButton(textArea, client, list));
 
 		} else if (ou.equals(HospitalMember.GOV)) {
 
-			// Government : Search, Delete
 			leftFooter.add(new DeleteButton(client, list, textArea, header));
 			textArea.setEditable(false);
 		}
