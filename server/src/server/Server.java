@@ -48,7 +48,6 @@ public class Server {
 			this.frame = frame;
 		}
 
-		@Override
 		public void actionPerformed(ActionEvent event) {
 
 			if (!started) {

@@ -85,8 +85,10 @@ public class Monitor {
 		String OU = identity.getOU();
 
 		try {
-			if ((OU.equals(HospitalMember.DOCTOR) && CN.equals(record.getDoctor())) || (OU.equals(HospitalMember.NURSE) && CN.equals(record.getNurse()))) {
-				dbm.updatePatientRecord(record, identity);
+			Record dbRecord = dbm.getRecordFromId(record.getId());
+			if ((OU.equals(HospitalMember.DOCTOR) && CN.equals(dbRecord.getDoctor())) || (OU.equals(HospitalMember.NURSE) && CN.equals(dbRecord.getNurse()))) {
+				dbRecord.setData(record.getData());
+				dbm.updatePatientRecord(dbRecord, identity);
 				return true;
 			}
 		} catch (SQLException e) {
